@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <!-- EDIT: Game title -->
+  <title>Undularity Game Template</title>
+
+  <link rel="stylesheet" href="styles/style.css">
+  <script type="text/javascript" src="js/bundle.js"></script>
+</head>
+<body>
+    <!-- This isn't needed and isn't visible in desktop versions,
+         because we can display the character information and the
+         tools onscreen all the time. -->
+    <div id="toolbar">
+      <!-- Set this to be a small version of the title, for the
+           toolbar on mobile devices. -->
+      <h1>Undum</h1>
+      <div class="nav">
+        <a href="#" class="button" id="menu-button">Menu</a>
+      </div>
+    </div>
+    <ul id="menu">
+      <li><a href="#title, #content_wrapper">Story</a></li>
+      <li><a href="#character_panel">Character</a></li>
+      <li><a href="#info_panel">Info</a></li>
+    </ul>
+
+    <div id="page">
+
+      <div id="tools_wrapper">
+        <div id="info_panel" class="tools left">
+
+          <!-- EDIT: Game background -->
+          <h1>Undum</h1>
+          <p>
+            Undum is a pure client-side game framework for narrative
+            interactive fiction. It is designed for HTML&#x200A;5 and
+            CSS&#x200A;3. You can read more and download the source
+            code <a href="http://github.com/idmillington/undum">here</a>.
+          </p>
+          <!-- End of Game Background -->
+
+          <div class='buttons'>
+            <button id="save">Save</button><button id="erase">Erase</button>
+          </div>
+        </div>
+
+        <div id="character_panel" class="tools right">
+          <h1>Character</h1>
+          <div id="character">
+            <div id="character_text">
+              <div id="character_text_content"></div>
+            </div>
+            <div id="qualities"></div>
+          </div>
+        </div>
+      </div> <!-- End of div.tools_wrapper -->
+
+      <div id="mid_panel">
+        <div id="title">
+          <div class="label">
+
+            <!-- EDIT: Game Title -->
+            <h1>Undularity Game Template</h1>
+            <h2>by Bruno Dias</h2>
+
+            <noscript>
+              <p class="noscript_message">This game requires Javascript.</p>
+            </noscript>
+            <p class="click_message">click to begin</p>
+          </div>
+        </div>
+
+        <div id="content_wrapper">
+          <div id="content">
+          </div>
+          <a name="end_of_content"></a>
+        </div>
+
+        <div id="legal">
+          <!-- EDIT: Your Copyright -->
+          <p>Undum is &copy; 2010 IDM.</p>
+          <p>Undularity is &copy; 2015 Bruno Dias.</p>
+
+          <!-- This line is totally optional. -->
+          <p>Created with <a href="http://undum.com">Undum</a>.</p>
+
+        </div>
+      </div>
+    </div> <!-- End of div.page -->
+
+    <!-- Holds UI elements that will be cloned and placed in the main
+         page. This block itself is always hidden. -->
+    <div id="ui_library">
+      <div id="quality" class="quality">
+        <span class="name" data-attr="name"></span>
+        <span class="value" data-attr="value"></span>
+      </div>
+
+      <div id="quality_group" class="quality_group">
+        <h2 data-attr="title"></h2>
+        <div class="qualities_in_group">
+        </div>
+      </div>
+
+      <div id="progress_bar" class="progress_bar">
+        <span class="name" data-attr="name"></span>
+        <span class="value" data-attr="value"></span>
+        <div class="progress_bar_track">
+          <div class="progress_bar_color" data-attr="width">
+          </div>
+        </div>
+        <span class="left_label" data-attr="left_label"></span>
+        <span class="right_label" data-attr="right_label"></span>
+      </div>
+
+      <hr id="turn_separator">
+    </div>
+
+    <div id="content_library">
+      <!-- This div holds situations loaded directly from HTML -->
+    </div>
+
+</body>
+</html>
