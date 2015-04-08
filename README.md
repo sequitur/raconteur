@@ -31,3 +31,15 @@ situation 'undularity_example',
 # The link will render as:
 # <a class="segue" href="another_situation">links</a>
 ```
+
+## License
+
+In short: You can use, modify, or redistribute Undularity and Undum, for any
+purpose, as long as this license document is kept with copies of it. See
+LICENSE for legalese.
+
+Undum is copyright (c) 2009-2015 I D Millington, and released under the MIT
+license.
+
+Undularity itself is copyright (c) 2015 Bruno Dias, and released under the
+same MIT license.
