@@ -1,3 +1,4 @@
-node_modules/**
+devel/node_modules/**
+devel/build/**
 game/**
 *.sublime-workspace
