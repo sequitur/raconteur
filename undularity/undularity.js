@@ -2,39 +2,57 @@ var undum = require('./undum.js'),
     md = require('markdown-it'),
     $ = require('jquery');
 
-/*
+/* ---------------------------------------------------------------------------
+  Undularity is a rethought API for Undum, featuring more usable interfaces
+  which coalesce as a DSL for defining Undum stories.
+----------------------------------------------------------------------------*/
+
+/* ---------------------------------------------------------------------------
   Helper functions
-*/
+----------------------------------------------------------------------------*/
 
 /*
   Normalises the whitespace on a string. So the indentation level of the
-  first line will become 0.
+  first line will become 0. FIXME: This isn't quite ideal. Need to figure out
+  a better way of preventing strings in source code ending up interpreted as
+  <pre> blocks.
 */
 
 String.prototype.normaliseTabs = function () {
   let lines = this.split('\n');
-  let indent = lines[0].match(/^\s+/) || lines[1].match(/^\s/);
+  let indent = lines[0].match(/^\s+/) || lines[1].match(/^\s+/);
   if (!indent) return this;
-  return lines.map( s => s.replace('^' + indent[0], '')).join('\n');
+  return lines.map( s => s.replace(new RegExp('^' + indent), '')).join('\n');
 };
 
 /* Agnostic Call */
+/*
+  Many properties in Undularity can be either a String, or a function that
+  takes some objects from the game state (character, system, and the current
+  situation) and returns a String. Or in Haskell terms:
+  String | (CharacterObject -> SystemObject -> SituationString -> String)
+
+  fcall() is added to the prototypes of both String and Function to handle
+  these situations. When called on a Function, it's an alias for
+  Function#call(); when called on a String, it only returns the string itself,
+  discarding any input.
+*/
 
 Function.prototype.fcall = Function.prototype.call;
 
 String.prototype.fcall = function () {return this;};
 
 /*
-  Markdown renderer.
+  Markdown renderer, defined with options.
 */
 
 var markdown = new md({
-  typographer: true,
-  html: true
+  typographer: true, // Use smart quotes.
+  html: true // Passthrough html.
 });
 
 /*
-  Ensures a string is a HTML string, by wrapping span tags.
+  Ensures a string is a HTML string, by wrapping it in span tags.
 */
 
 String.prototype.spanWrap = function () {
@@ -42,33 +60,91 @@ String.prototype.spanWrap = function () {
 };
 
 /*
-  Adds the "fade" class to some html.
+  Adds the "fade" class to a htmlString.
 */
 
 String.prototype.fade = function () {
   return $(this).addClass('fade');
 };
 
+/* Situations ----------------------------------------------------------------
+  
+  The prototype UndularitySituation is the basic spec for situations
+  created with Undularity. It should be able to handle any use case for Undum.
+
+  Properties:
+
+    (In addition to properties inherited from undum.Situation)
+
+    actions :: {key: (character, system, from) -> null}
+
+    An object containing definitions for actions, which are called when an
+    action without a special marker (writer, inserter, replacer) is called
+    when the situation is current, usually by clicking an action link.
+
+    after :: (character, system, from) -> null
+
+    A function that is called right after printing the content of the
+    situation. Useful for housekeeping tasks (Such as changing character
+    stats) or implementing custom behaviour in general.
+
+    before :: (character, system, from) -> null
+
+    Similar to after, but called first 
+
+    choices :: [String]
+
+    A list of situation names and/or tags that can be listed as choices for
+    this situation. That list will be further filtered by CanView and
+    CanChoose.
+
+    content :: markdownString | (character, system, from) -> markdownString
+
+    The main content of the situation, printed when the situation is entered.
+
+    visited :: Number
+
+    Defaults to 0. Incremented every time the situation is entered.
+
+    writers :: {key: markdownString | (character, system, from) -> markdownString}
+
+    An object containing definitions for special actions called by inserter,
+    writer, and replacer links. Note that the content of writer links will be
+    interpreted as a regular markdownString, while the content of replacer
+    and inserter links, on the assumption that it's meant to be written into
+    an existing paragraph, will be interpreted as a inline markdown.
+
+*/
+
 var UndularitySituation = function (spec) {
   undum.Situation.call(this, spec);
 
-  // API properties
+  // Add all properties of the spec to the object, indiscriminately.
+  Object.keys(spec).forEach( key => {
+    if (this[key] === undefined) {
+      this[key] = spec[key];
+    }
+  });
 
-  this.content = spec.content;
-  this.choices = (spec.choices === undefined) ? [] : spec.choices;
-  this.writers = (spec.writers === undefined) ? {} : spec.writers;
-  this.actions = (spec.actions === undefined) ? {} : spec.actions;
-
-  this.visited = false;
+  this.visited = 0;
 
 };
 
 UndularitySituation.inherits(undum.Situation);
 
 UndularitySituation.prototype.enter = function (character, system, f) {
+
+  this.visited++;
+
+  if (this.before) this.before(character, system, f);
+
   if (this.content) {
-    system.write(markdown.render(this.content.fcall(this, character, system, f).normaliseTabs()));
+    system.write(
+      markdown.render(
+        this.content.fcall(this, character, system, f).normaliseTabs()));
   }
+
+  if (this.after) this.after(character, system, f);
 
   if (this.choices) {
     let choices = system.getSituationIdChoices(this.choices,
@@ -179,6 +255,57 @@ var span = function (content) {
   return monad;
 }
 
+/*
+  Quality definition function
+
+  Meant to be called only once in the main story source file, this definition
+  is passed a spec to define qualities. The spec is an object containing quality
+  groups as objects, which contain qualities that themselves hold definitions.
+*/
+
+var qualities = function (spec) {
+  Object.keys(spec).forEach(function(group) {
+    /* The special "name" and "options" properties are passed on. */
+    var groupName = (spec[group].name === undefined) ? null : spec[group].name;
+    var groupOpts = (spec[group].options === undefined) ? {} : spec[group].options;
+    undum.game.qualityGroups[group] = new undum.QualityGroup(groupName, groupOpts);
+    Object.keys(spec[group]).forEach(function(quality) {
+      if (quality === "name" || quality === "options") return;
+      undum.game.qualities[quality] = spec[group][quality](group);
+    });
+  });
+};
+
+var qualityShim = {
+  integer: "IntegerQuality",
+  nonZeroInteger: "NonZeroIntegerQuality",
+  numeric: "NumericQuality",
+  fudgeAdjectives: "FudgeAdjectivesQuality",
+  onOff: "OnOffQuality",
+  yesNo: "YesNoQuality"
+};
+
+Object.keys(qualityShim).forEach(function (key) {
+  qualities[key] = function (title, spec={}) {
+    return function (group) {
+      spec.group = group;
+      return new undum[qualityShim[key]](title, spec);
+    };
+  };
+});
+
+/*
+  WordScaleQuality has a different interface (naughty!) so it has to be
+  defined by hand.
+*/
+
+qualities.wordScale = function (title, words, spec={}) {
+  return function (group) {
+    spec.group = group;
+    return new undum.WordScaleQuality(title, words, spec);
+  };
+};
+
 module.exports = function (name, spec) {
   spec.name = name;
   undum.game.situations[name] = new UndularitySituation(spec);
@@ -186,3 +313,5 @@ module.exports = function (name, spec) {
 
 module.exports.a = a;
 module.exports.span = span;
+
+module.exports.qualities = qualities;

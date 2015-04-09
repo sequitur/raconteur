@@ -3,7 +3,8 @@ var situation = require('../lib/undularity.js'),
     undum = require('../lib/undum.js');
 
 var a = situation.a,
-    span = situation.span;
+    span = situation.span,
+    qualities = situation.qualities;
 
 undum.game.id = "my_game_id";
 undum.game.version = "1.0";
@@ -18,7 +19,8 @@ situation('start', {
 
 situation('functions-as-properties', {
   content: (character, system, from) =>
-    `This property of this situation is outputted by a function, which allows
+    `
+    This property of this situation is outputted by a function, which allows
     us to incorporate variables such as the name of the situation we came
     from; in this case, "${from}."
 
@@ -92,6 +94,21 @@ situation('custom-actions', {
   },
   tags: ['testing-option'],
   optionText: 'Special Actions'
-})
+});
+
+qualities({
+  stats: {
+    name: 'Statistics',
+    perception: qualities.integer("Perception"),
+    intelligence: qualities.integer("Intelligence"),
+    size: qualities.fudgeAdjectives("Size")
+  }
+});
+
+undum.game.init = function (character, system) {
+  character.qualities.intelligence = 10;
+  character.qualities.perception = 10;
+  character.qualities.size = 1;
+};
 
 $(function(){undum.begin()});
