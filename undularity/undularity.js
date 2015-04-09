@@ -132,6 +132,15 @@ var UndularitySituation = function (spec) {
 
 UndularitySituation.inherits(undum.Situation);
 
+/*
+  Undum calls Situation.enter every time a situation is entered, and
+  passes it three arguments; The character object, the system object,
+  and a string referencing the previous situation, or null if there is
+  none (ie, for the starting situation).
+
+  Undularity's version of enter is set up to fulfill most use cases.
+*/
+
 UndularitySituation.prototype.enter = function (character, system, f) {
 
   this.visited++;
@@ -152,6 +161,17 @@ UndularitySituation.prototype.enter = function (character, system, f) {
     system.writeChoices(choices);
   }
 };
+
+/*
+  Situation.prototype.act() is called by Undum whenever an action link
+  (Ie, a link that doesn't point at another situation or an external URL) is
+  clicked.
+
+  Undularity's version of act() is set up to implement commonly used
+  functionality: "writer" links, "replacer" links, "inserter" links, and
+  generic "action" links that call functions which access the underlying
+  Undum API.
+*/
 
 UndularitySituation.prototype.act = function (character, system, action) {
   console.log("Act called with action ", action);
