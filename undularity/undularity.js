@@ -174,7 +174,6 @@ UndularitySituation.prototype.enter = function (character, system, f) {
 */
 
 UndularitySituation.prototype.act = function (character, system, action) {
-  console.log("Act called with action ", action);
   var actionClass,
       self = this;
 
@@ -217,7 +216,7 @@ UndularitySituation.prototype.act = function (character, system, action) {
 
   They define a monadic interface:
 
-  a().id('my-link').content('link').writer('my-ref')
+  a.id('my-link').content('link').writer('my-ref').tag()
     -> <a id="my-link" href="./_writer_my-ref">link</a>
 
   span().here -> <span></span>
@@ -230,50 +229,79 @@ UndularitySituation.prototype.act = function (character, system, action) {
   once: The 'once' special link class. A getter.
 */
 
-
-var a = function () {
-  var once = "",
-      id = "",
-      content = "";
-  var monad = {
-    writer: (ref) =>
-      `<a ${id} class="${once} writer" href="./_writer_${ref}">${markdown.renderInline(content)}</a>`,
-    replacer: (ref) =>
-      `<a ${id} class="${once} replacer" href="./_replacer_${ref}">${markdown.renderInline(content)}</a>`,
-    inserter: (ref) =>
-      `<a ${id} class="${once} inserter" href="./_inserter_${ref}">${markdown.renderInline(content)}</a>`,
-    action: (ref) =>
-      `<a ${id} class="${once}" href="./${ref}">${markdown.renderInline(content)}</a>`,
-    external: (href) =>
-      `<a ${id} href="${ref}">${markdown.renderInline(content)}</a>`,
-    content: function (s) { content = s; return monad; },
-    id: function (s) {id = `id="${s}"`; return monad; },
-    get once () { once = "once"; return monad; }
-  };
-  return monad;
+var elementMonad = function (element) {
+  this.element = element;
 };
 
-var span = function (content) {
-  var elementClass = "",
-      id = "",
-      content = "";
-  var monad = {
-    get here () { return `<span ${id} ${elementClass}>${content}</span>`; },
-    id: function (s) {
-      id = `id="${s}"`;
-      return monad;
-    },
-    content: function (s) {
-      content = s;
-      return monad;
-    },
-    class: function (s) {
-      elementClass = `class="${s}"`;
-      return monad;
-    }
-  };
-  return monad;
+var monadSetterGen = function (prop) {
+  return function (value) {
+    var newMonad = Object.create(this);
+    newMonad['_' + prop] = value;
+    return Object.freeze(newMonad);
+  }
 }
+
+elementMonad.prototype.class = monadSetterGen("class");
+elementMonad.prototype.id = monadSetterGen("id");
+elementMonad.prototype.type = monadSetterGen("linkType");
+elementMonad.prototype.content = monadSetterGen("content");
+elementMonad.prototype.ref = monadSetterGen("ref");
+elementMonad.prototype.url = elementMonad.prototype.ref;
+elementMonad.prototype.situation = elementMonad.prototype.ref;
+
+var linkTypeGen = function (type) {
+  return function (ref) {
+    return this.type(type).ref(ref);
+  }
+}
+
+elementMonad.prototype.writer = linkTypeGen("writer");
+elementMonad.prototype.replacer = linkTypeGen("replacer");
+elementMonad.prototype.inserter = linkTypeGen("inserter");
+elementMonad.prototype.action = linkTypeGen("action");
+
+elementMonad.prototype.tag = function () {
+  var classes = "",
+      classString = "",
+      idString = "",
+      hrefString= "",
+      contentString = "";
+
+  if (this._class) {
+    classes += this._class;
+  }
+  if (this._linkType) {
+    classes += (' ' + this._linkType);
+  }
+  if (classes) {
+    classString = ` class="${classes}"`;
+  }
+
+  if (this._id) {
+    idString = ` id="${this._id}"`;
+  }
+
+  if (this.element === "a") {
+    if (this._linkType) {
+      if (this._linkType === "action") {
+        hrefString = ` href="./${this._ref}"`;
+      } else {
+        hrefString = ` href="./_${this._linkType}_${this._ref}"`;
+      }
+    } else {
+      hrefString = ` href="${this._ref}"`;
+    }
+  }
+
+  if (this._content) {
+    contentString = markdown.renderInline(this._content);
+  }
+
+  return `<${this.element}${classString}${idString}${hrefString}>${contentString}</${this.element}>`;
+};
+
+var a = Object.freeze(new elementMonad("a"));
+var span = Object.freeze(new elementMonad("span"));
 
 /*
   Quality definition function

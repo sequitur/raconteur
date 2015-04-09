@@ -56,16 +56,14 @@ situation('special-links', {
   # Special Links
 
   Undularity supports various special types of links, starting with
-  ${a().content('writer').once.writer('writerlink')} links.
+  ${a.content('writer').class('once').writer('writerlink').tag()} links.
 
-  Also notable are ${a().id('replacer-link').content('replacer').replacer('replacer-link')}
+  Also notable are ${a.id('replacer-link').content('replacer').replacer('replacer-link').tag()}
   links, which replace the content of a given id.
 
   And finally, we have ${
-    a().once.content('inserter').inserter('inserter-link')
-  } links, which insert something into a specified element${
-    span().id('inserter-link').here
-  }.
+    a.class("once").content('inserter').inserter('inserter-link').tag()
+  } links, which insert something into a specified element${span.id('inserter-link').tag()}.
   `,
   writers: {
     writerlink: "Writer links can only be clicked once.",
@@ -81,7 +79,7 @@ situation('custom-actions', {
 
   You can define actions with custom effects that access the underlying
   Undum API. Try clicking
-  ${a().content('this link').action('specialaction')} for example.
+  ${a.content('this link').action('specialaction').tag()} for example.
   `,
   actions: {
     specialaction: function (character, system, from) {
