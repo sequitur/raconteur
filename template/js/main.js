@@ -2,7 +2,8 @@ var situation = require('../lib/undularity.js'),
     $ = require('jquery'),
     undum = require('../lib/undum.js');
 
-var a = situation.a;
+var a = situation.a,
+    span = situation.span;
 
 undum.game.id = "my_game_id";
 undum.game.version = "1.0";
@@ -57,12 +58,40 @@ situation('special-links', {
 
   Also notable are ${a().id('replacer-link').content('replacer').replacer('replacer-link')}
   links, which replace the content of a given id.
+
+  And finally, we have ${
+    a().once.content('inserter').inserter('inserter-link')
+  } links, which insert something into a specified element${
+    span().id('inserter-link').here
+  }.
   `,
   writers: {
     writerlink: "Writer links can only be clicked once.",
-    'replacer-link': "switching"
+    'replacer-link': "switching",
+    'inserter-link': "-- like this"
   },
   tags: ['testing-option']
 });
+
+situation('custom-actions', {
+  content: `
+  # Special Actions
+
+  You can define actions with custom effects that access the underlying
+  Undum API. Try clicking
+  ${a().content('this link').action('specialaction')} for example.
+  `,
+  actions: {
+    specialaction: function (character, system, from) {
+      system.write(`
+        <p>
+          Custom actions access Undum directly. They also have access
+          to the situation object itself, through <code>this</code>.
+        </p>`);
+    }
+  },
+  tags: ['testing-option'],
+  optionText: 'Special Actions'
+})
 
 $(function(){undum.begin()});

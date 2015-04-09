@@ -57,6 +57,7 @@ var UndularitySituation = function (spec) {
   this.content = spec.content;
   this.choices = (spec.choices === undefined) ? [] : spec.choices;
   this.writers = (spec.writers === undefined) ? {} : spec.writers;
+  this.actions = (spec.actions === undefined) ? {} : spec.actions;
 
   this.visited = false;
 
@@ -77,6 +78,7 @@ UndularitySituation.prototype.enter = function (character, system, f) {
 };
 
 UndularitySituation.prototype.act = function (character, system, action) {
+  console.log("Act called with action ", action);
   var actionClass,
       self = this;
 
@@ -84,20 +86,30 @@ UndularitySituation.prototype.act = function (character, system, action) {
     writer: function (ref) {
       system.write(
         markdown.render(
-          self.writers[ref].fcall(this, character, system, action)
+          self.writers[ref].fcall(self, character, system, action)
         ).fade());
     },
     replacer: function (ref) {
-      console.log('Replacer called ', ref);
       system.replaceWith(
         markdown.renderInline(
-          self.writers[ref].fcall(this, character, system, action)
+          self.writers[ref].fcall(self, character, system, action)
         ).spanWrap().fade(), `#${ref}`);
+    },
+    inserter: function (ref) {
+      system.writeInto(
+        markdown.renderInline(
+          self.writers[ref].fcall(self, character, system, action)
+          ).spanWrap().fade(), `#${ref}`);
     }
   };
 
   if (actionClass = action.match(/^_(\w+)_(.+)$/)) {
     responses[actionClass[1]](actionClass[2]);
+  } else if (self.actions.hasOwnProperty(action)) {
+    self.actions[action].call(self, character, system, action);
+  } else {
+    throw new Err(`Action "${action}" attempted with no corresponding` +
+      'action in current situation.');
   }
 
 };
@@ -128,8 +140,16 @@ var a = function () {
       id = "",
       content = "";
   var monad = {
-    writer: (ref) => `<a ${id} class="${once} writer" href="./_writer_${ref}">${markdown.renderInline(content)}</a>`,
-    replacer: (ref) => `<a ${id} class="${once} replacer" href="./_replacer_${ref}">${markdown.renderInline(content)}</a>`,
+    writer: (ref) =>
+      `<a ${id} class="${once} writer" href="./_writer_${ref}">${markdown.renderInline(content)}</a>`,
+    replacer: (ref) =>
+      `<a ${id} class="${once} replacer" href="./_replacer_${ref}">${markdown.renderInline(content)}</a>`,
+    inserter: (ref) =>
+      `<a ${id} class="${once} inserter" href="./_inserter_${ref}">${markdown.renderInline(content)}</a>`,
+    action: (ref) =>
+      `<a ${id} class="${once}" href="./${ref}">${markdown.renderInline(content)}</a>`,
+    external: (href) =>
+      `<a ${id} href="${ref}">${markdown.renderInline(content)}</a>`,
     content: function (s) { content = s; return monad; },
     id: function (s) {id = `id="${s}"`; return monad; },
     get once () { once = "once"; return monad; }
@@ -165,3 +185,4 @@ module.exports = function (name, spec) {
 };
 
 module.exports.a = a;
+module.exports.span = span;
