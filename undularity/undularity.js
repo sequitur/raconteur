@@ -226,44 +226,76 @@ UndularitySituation.prototype.act = function (character, system, action) {
 
   They define a monadic interface:
 
-  a.id('my-link').content('link').writer('my-ref').tag()
+  a.id('my-link').content('link').writer('my-ref')
     -> <a id="my-link" href="./_writer_my-ref">link</a>
 
-  span().here -> <span></span>
+  span -> <span></span>
+
+  The object supplies a toString() method that outputs the tag. Element
+  helpers are immutable, so theoretically this should be safe from side
+  effects. This interface allows the safe definition of templates which
+  can be used and modified at will, for instance:
+
+  let mySpanClass = span.class('myclass'); // -> <span class="myclass"></span>
+  mySpanClass.content("Hello!"); // -> <span class="myclass">Hello!</span>
+
+  Methods on an elementHelper return a new elementHelper that inherits from
+  itself. Since those objects (should be) immutable by being frozen when they
+  are created, this is semantically equivalent to returning a copy but more
+  efficient in terms
+
+  Methods:
+    class :: String -> elementHelper
+      Returns a new elementHelper with the given class added.
+
+    classes :: [String] -> elementHelper
+      Returns a new elementHelper with the given classes.
+
+    id :: String -> elementHelper
+      Returns a new elementHelper with the given id.
+
+
 */
 
-/* Anchor element */
-/* Transforms:
-  content: The inner content of the link, as inline Markdown.
-  id: A space-separated list of element ids.
-  once: The 'once' special link class. A getter.
-*/
 
 var elementHelper = function (element) {
   this.element = element;
+  this._classes = [];
 };
 
 var elementSetterGen = function (prop) {
   return function (value) {
-    var newMonad = Object.create(this);
-    newMonad['_' + prop] = value;
-    return Object.freeze(newMonad);
-  }
-}
+    return Object.freeze(Object.create(this, {
+      [prop]: {value}
+    }));
+  };
+};
 
-elementHelper.prototype.class = elementSetterGen("class");
-elementHelper.prototype.id = elementSetterGen("id");
-elementHelper.prototype.type = elementSetterGen("linkType");
-elementHelper.prototype.content = elementSetterGen("content");
-elementHelper.prototype.ref = elementSetterGen("ref");
+elementHelper.prototype.classes = function (newClasses) {
+  return Object.freeze(Object.create(this, {
+    _classes: {
+      value: newClasses
+    }
+  }));
+};
+
+elementHelper.prototype.class = function (newClass) {
+  return this.classes(this._classes.concat(newClass));
+};
+
+elementHelper.prototype.id = elementSetterGen("_id");
+elementHelper.prototype.type = elementSetterGen("_linkType");
+elementHelper.prototype.content = elementSetterGen("_content");
+elementHelper.prototype.ref = elementSetterGen("_ref");
 elementHelper.prototype.url = elementHelper.prototype.ref;
 elementHelper.prototype.situation = elementHelper.prototype.ref;
+elementHelper.prototype.once = () => this.class('once');
 
 var linkTypeGen = function (type) {
   return function (ref) {
     return this.type(type).ref(ref);
   }
-}
+};
 
 elementHelper.prototype.writer = linkTypeGen("writer");
 elementHelper.prototype.replacer = linkTypeGen("replacer");
@@ -277,8 +309,8 @@ elementHelper.prototype.toString = function () {
       hrefString= "",
       contentString = "";
 
-  if (this._class) {
-    classes += this._class;
+  if (this._classes) {
+    classes += this._classes.join(' ');
   }
   if (this._linkType) {
     classes += (' ' + this._linkType);
