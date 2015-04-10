@@ -8,27 +8,45 @@ var gulp = require('gulp'),
     babelify = require('babelify'),
     source = require('vinyl-source-stream'),
     less = require ('gulp-less'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    watchify = require('watchify'),
+    gutil = require('gulp-util'),
+    sourcemaps = require('gulp-sourcemaps'),
+    buffer = require('vinyl-buffer')
+    _ = require('lodash');
 
 var reload = browserSync.reload;
 
-gulp.task('lib', function () {
-  return gulp.src('../undum/lib/*.js')
-        .pipe(gulp.dest('./build/lib/'));
-});
+/* Watchify setup */
 
-gulp.task('undularity', function () {
-  return gulp.src('../undularity/*.js')
-        .pipe(gulp.dest('./build/lib/'));
-});
+var watchifyOpts = {
+  entries: ['./js/main.js'],
+  debug: true,
+  transform: [babelify]
+};
 
-gulp.task('js-template', function () {
-  return gulp.src('../template/js/*.js')
-        .pipe(gulp.dest('./build/game/'));
-});
+var opts = _.assign({}, watchify.args, watchifyOpts);
+var bundler = watchify(browserify(opts));
 
-gulp.task('browserify', ['lib', 'undularity', 'js-template'], function () {
-  return browserify('./build/game/main.js')
+var bundle = function () {
+  return bundler.bundle()
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({
+      loadMaps: true,
+      sourceRoot: "../../../"
+    }))
+    .on('error', gutil.log.bind(gutil, 'Sourcemaps Error'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build/game'))
+    .pipe(reload({stream: true}));
+}
+
+/*
+
+gulp.task('browserify', function () {
+  return browserify('../templates/js/main.js')
     .transform(babelify)
     .bundle()
     .on("error", function (err) { console.log ("Error: " + err.message)})
@@ -38,22 +56,28 @@ gulp.task('browserify', ['lib', 'undularity', 'js-template'], function () {
 
 });
 
+*/
+
+gulp.task('js', bundle);
+bundler.on('update', bundle);
+bundler.on('log', gutil.log);
+
 gulp.task('less', function () {
-  return gulp.src('../template/less/undum.less')
+  return gulp.src('less/undum.less')
         .pipe(less())
         .pipe(gulp.dest('./build/css/'))
         .pipe(reload({stream: true}));
 });
 
 gulp.task('html', function () {
-  return gulp.src('../template/html/index.html')
+  return gulp.src('html/index.html')
         .pipe(gulp.dest('./build/'))
         .pipe(reload({stream: true}));
 
 });
 
 gulp.task('default', function () {
-  gulp.start('browserify');
+  gulp.start('js');
   gulp.start('less');
   gulp.start('html');
 });
@@ -64,11 +88,5 @@ gulp.task('serve', ['default'], function () {
     port: 9000,
     server: './build'
   });
-
-  gulp.watch('../template/less/*.less', ['less']);
-  gulp.watch('../template/html/*.html', ['html']);
-  gulp.watch('../undum/lib/*.js', ['browserify']);
-  gulp.watch('../undularity/*.js', ['browserify']);
-  gulp.watch('../template/js/*.js', ['browserify']);
 
 });

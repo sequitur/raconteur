@@ -1,7 +1,7 @@
-var situation = require('../lib/undularity.js'),
+var situation = require('undularity/situation.js'),
     $ = require('jquery'),
-    undum = require('../lib/undum.js'),
-    tools = require('../lib/tools.js');
+    undum = require('undum-commonjs'),
+    tools = require('undularity/tools.js');
 
 var a = situation.a,
     span = situation.span,
