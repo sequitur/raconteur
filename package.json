@@ -15,7 +15,8 @@
     "browserify": "~9.0.8",
     "babelify": "~6.0.2",
     "vinyl-source-stream": "~1.1.0",
-    "gulp-less": "~3.0.2"
+    "gulp-less": "~3.0.2",
+    "browser-sync": "~2.5.3"
   },
   "private": true
 }
