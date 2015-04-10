@@ -18,7 +18,7 @@ gulp.task('lib', function () {
 });
 
 gulp.task('undularity', function () {
-  return gulp.src('../undularity/undularity.js')
+  return gulp.src('../undularity/*.js')
         .pipe(gulp.dest('./build/lib/'));
 });
 
@@ -68,7 +68,7 @@ gulp.task('serve', ['default'], function () {
   gulp.watch('../template/less/*.less', ['less']);
   gulp.watch('../template/html/*.html', ['html']);
   gulp.watch('../undum/lib/*.js', ['browserify']);
-  gulp.watch('../undularity/undularity.js', ['browserify']);
+  gulp.watch('../undularity/*.js', ['browserify']);
   gulp.watch('../template/js/*.js', ['browserify']);
 
 });

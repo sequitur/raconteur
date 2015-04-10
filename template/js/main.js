@@ -1,6 +1,7 @@
 var situation = require('../lib/undularity.js'),
     $ = require('jquery'),
-    undum = require('../lib/undum.js');
+    undum = require('../lib/undum.js'),
+    tools = require('../lib/tools.js');
 
 var a = situation.a,
     span = situation.span,
@@ -42,9 +43,9 @@ situation('markdown-features', {
   headers (as above), [external links](http://github.com), and even
   preformatted blocks of text:
 
-    situation('start', {
-      content: "This is an example."
-    });
+      situation('start', {
+        content: "This is an example."
+      });
   
   Additionally, we also support "smart quotes" and -- dashes.`,
   tags: ['testing-option'],
@@ -56,21 +57,21 @@ situation('special-links', {
   # Special Links
 
   Undularity supports various special types of links, starting with
-  ${a.content('writer').class('once').writer('writerlink').tag()} links.
+  ${a('writer').class('once').writer('writerlink')} links.
 
-  Also notable are ${a.id('replacer-link').content('replacer').replacer('replacer-link').tag()}
+  Also notable are ${a('replacer').id('replacer-link').replacer('replacer-link')}
   links, which replace the content of a given id.
 
-  And finally, we have ${
-    a.class("once").content('inserter').inserter('inserter-link').tag()
-  } links, which insert something into a specified element${span.id('inserter-link').tag()}.
+  And finally, we have ${a('inserter').class("once").inserter('inserter-link')}
+  links, which insert something into a specified element${span().id('inserter-link')}.
   `,
   writers: {
     writerlink: "Writer links can only be clicked once.",
     'replacer-link': "switching",
     'inserter-link': "-- like this"
   },
-  tags: ['testing-option']
+  tags: ['testing-option'],
+  optionText: 'Special Links'
 });
 
 situation('custom-actions', {
@@ -79,7 +80,7 @@ situation('custom-actions', {
 
   You can define actions with custom effects that access the underlying
   Undum API. Try clicking
-  ${a.content('this link').action('specialaction').tag()} for example.
+  ${a('this link').action('specialaction')} for example.
   `,
   actions: {
     specialaction: function (character, system, from) {
@@ -94,6 +95,52 @@ situation('custom-actions', {
   optionText: 'Special Actions'
 });
 
+situation('randomness', {
+  content: (character, system, from) =>
+    `
+    # Randomness
+
+    Randomness in Undum is best if you use Undum's own random number
+    generator, which ensures consistency across save games. For example,
+    try saving and reloading to verify that this list of animals remains
+    in the same order:
+    ${["dog", "cat", "alpaca", "crow"].shuffle(system).join(', ')}.
+    `,
+  tags: ['testing-option'],
+  optionText: 'Randomness' 
+});
+
+var myIterators = {};
+
+situation('iterators', {
+  content: (character, system, from) =>
+  `
+  # Iterators
+
+  Iterators are an useful feature for generating adaptive text. For example,
+  clicking ${a('this link').writer('iterator')} will output a
+  new paragraph with a random animal.
+
+  Initialising iterators during your init function will make them even more
+  useful, since it lets you pass the system object on to them to ensure
+  consistency between saves. For example, ${a('this link')
+  .writer('consistent')} will produce the same output every
+  time.
+
+  Other iterators allow you to ${a('cycle').writer('cycler')} through
+  different content in ${a('various ways').writer('stopper')}.
+  `,
+  writers: {
+    iterator: tools.oneOf(['Cat', 'Dog', 'Crow', 'Alpaca']).randomly(),
+    consistent: () => myIterators.consistentIterator(),
+    cycler: tools.oneOf(['Spring', 'Summer', 'Fall', 'Winter']).cycling(),
+    stopper: tools.oneOf(['First click', 'Second click', 'Another click']).stopping()
+  },
+  tags: ['testing-option'],
+  optionText: 'Iterators'
+});
+
+
 qualities({
   stats: {
     name: 'Statistics',
@@ -107,6 +154,9 @@ undum.game.init = function (character, system) {
   character.qualities.intelligence = 10;
   character.qualities.perception = 10;
   character.qualities.size = 1;
+  myIterators.consistentIterator =
+    tools.oneOf(['Blue', 'Black', 'Green', 'Red', 'White'])
+    .inRandomOrder(system);
 };
 
 $(function(){undum.begin()});

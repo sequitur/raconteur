@@ -179,18 +179,28 @@ UndularitySituation.prototype.act = function (character, system, action) {
 
   var responses = {
     writer: function (ref) {
+      if (self.writers[ref] === undefined) {
+        console.log(self);
+        throw new Error("Tried to call undefined writer:" + ref);
+      }
       system.write(
         markdown.render(
           self.writers[ref].fcall(self, character, system, action)
         ).fade());
     },
     replacer: function (ref) {
+      if (self.writers[ref] === undefined) {
+        throw new Error("Tried to call undefined replacer:" + ref);
+      }
       system.replaceWith(
         markdown.renderInline(
           self.writers[ref].fcall(self, character, system, action)
         ).spanWrap().fade(), `#${ref}`);
     },
     inserter: function (ref) {
+      if (self.writers[ref] === undefined) {
+        throw new Error("Tried to call undefined inserter:" + ref);
+      }
       system.writeInto(
         markdown.renderInline(
           self.writers[ref].fcall(self, character, system, action)
@@ -229,11 +239,11 @@ UndularitySituation.prototype.act = function (character, system, action) {
   once: The 'once' special link class. A getter.
 */
 
-var elementMonad = function (element) {
+var elementHelper = function (element) {
   this.element = element;
 };
 
-var monadSetterGen = function (prop) {
+var elementSetterGen = function (prop) {
   return function (value) {
     var newMonad = Object.create(this);
     newMonad['_' + prop] = value;
@@ -241,13 +251,13 @@ var monadSetterGen = function (prop) {
   }
 }
 
-elementMonad.prototype.class = monadSetterGen("class");
-elementMonad.prototype.id = monadSetterGen("id");
-elementMonad.prototype.type = monadSetterGen("linkType");
-elementMonad.prototype.content = monadSetterGen("content");
-elementMonad.prototype.ref = monadSetterGen("ref");
-elementMonad.prototype.url = elementMonad.prototype.ref;
-elementMonad.prototype.situation = elementMonad.prototype.ref;
+elementHelper.prototype.class = elementSetterGen("class");
+elementHelper.prototype.id = elementSetterGen("id");
+elementHelper.prototype.type = elementSetterGen("linkType");
+elementHelper.prototype.content = elementSetterGen("content");
+elementHelper.prototype.ref = elementSetterGen("ref");
+elementHelper.prototype.url = elementHelper.prototype.ref;
+elementHelper.prototype.situation = elementHelper.prototype.ref;
 
 var linkTypeGen = function (type) {
   return function (ref) {
@@ -255,12 +265,12 @@ var linkTypeGen = function (type) {
   }
 }
 
-elementMonad.prototype.writer = linkTypeGen("writer");
-elementMonad.prototype.replacer = linkTypeGen("replacer");
-elementMonad.prototype.inserter = linkTypeGen("inserter");
-elementMonad.prototype.action = linkTypeGen("action");
+elementHelper.prototype.writer = linkTypeGen("writer");
+elementHelper.prototype.replacer = linkTypeGen("replacer");
+elementHelper.prototype.inserter = linkTypeGen("inserter");
+elementHelper.prototype.action = linkTypeGen("action");
 
-elementMonad.prototype.tag = function () {
+elementHelper.prototype.toString = function () {
   var classes = "",
       classString = "",
       idString = "",
@@ -300,8 +310,18 @@ elementMonad.prototype.tag = function () {
   return `<${this.element}${classString}${idString}${hrefString}>${contentString}</${this.element}>`;
 };
 
-var a = Object.freeze(new elementMonad("a"));
-var span = Object.freeze(new elementMonad("span"));
+var a_proto = Object.freeze(new elementHelper("a"));
+var span_proto = Object.freeze(new elementHelper("span"));
+
+var a = function (content) {
+  if (content) return a_proto.content(content);
+  return a_proto;
+};
+
+var span = function (content) {
+  if (content) return span_proto.content(content);
+  return span_proto;
+};
 
 /*
   Quality definition function
