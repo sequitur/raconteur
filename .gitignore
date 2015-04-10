@@ -1,4 +1,6 @@
-devel/node_modules/**
+node_modules/*
+!node_modules/undularity
+!node_modules/undum
 devel/build/**
 game/**
 *.sublime-workspace

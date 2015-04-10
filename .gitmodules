@@ -1,0 +1,4 @@
+[submodule "node_modules/undum"]
+	path = node_modules/undum
+	url = git@github.com:sequitur/undum.git
+	branch = commonjs
