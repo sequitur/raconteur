@@ -140,6 +140,19 @@ situation('iterators', {
   optionText: 'Iterators'
 });
 
+situation('progress-bar', {
+  before (character, system, from) {
+    system.animateQuality('intelligence', character.qualities.intelligence + 1);
+  },
+  content: `
+    # Progress Bars
+
+    Progress bars and other underlying Undum features are still accessible
+    through Undum's own API.
+    `,
+  tags: ['testing-option'],
+  optionText: 'Progress bars'
+});
 
 qualities({
   stats: {

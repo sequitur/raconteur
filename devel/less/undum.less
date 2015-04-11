@@ -1,14 +1,54 @@
-@import "undum-mobile";
 
-@body_bg: tan;
+/*
+    We're using a Material Design-inspired colour palette and look as our
+    default here.
+
+    Indigo (Main colour):
+        500 #3f51b5
+        100 #c5cae9
+        700 #303f9f
+
+    ORange (Accent colour):
+        500 #ff9800
+
+    White:
+        #ffffff
+*/
+
+@body_bg: #3f51b5; // Indigo 500
 @content_bg: white;
-@title_bg: steelblue;
-@text-color: black;
+@title_bg: #c5cae9; // Indigo 100
+@text_color: rgba(0,0,0,0.87); // 87% opacity black
+@link_color: #ff9800;
+
+/* Typography */
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+
+@body_font: 'Roboto', sans-serif;
+@root_font_size: 18px;
+
+/* Layout */
+
+@middle_width: 32rem;
+
+.material_box(@bg) {
+    background: @bg;
+    border-right: 1px solid darken(@bg, 20%);
+    border-bottom: 1px solid darken(@bg, 20%);
+    box-shadow: 2px 2px 1px 1px fade(black, 40%),
+                0 0 2px 2px fade(black, 10%);
+}
+
+.content_box() {
+    .material_box(@content_bg)
+}
 
 body {
     background: @body_bg;
-    color: @text-color;
-    font-size: 18px;
+    color: @text_color;
+    font-size: @root_font_size;
+    font-family: @body_font;
 }
 
 /* Basic structure */
@@ -24,34 +64,34 @@ body {
 /* The title block */
 
 #title {
-    max-width: 28em;
-    margin: 2.2em auto 1.1em auto;
+    .material_box(@title_bg);
+    max-width: @middle_width;
+    margin: 2rem auto 1rem auto;
     background: @title_bg;
-    padding: 1.7em;
-    border: 1px solid black;
+    padding: 32px;
     cursor: pointer; /* Until we click to start. */
 
 
      .label {
+        .content_box();
         overflow: hidden;
         padding: 2.0em;
         margin: auto;
         max-width: 18em;
         position: relative;
-        border: 1px dashed black;
     }
 
     h1 {
-        font-size: 1.6em;
-        line-height: 1.4em;
-        letter-spacing: 0.2em;
+        font-size: 2rem;
+        line-height: 2rem;
         font-weight: normal;
         padding-bottom: 1.1em;
         border-bottom: 1px solid #321;
     }
 
     h2 {
-        font-size: 1.2em;
+        font-size: 20px;
+        line-height: 20px;
         font-weight: normal;
         text-align: center;
         margin: 1.1em 0 0 0;
@@ -92,22 +132,18 @@ body {
 
 /* Main content */
 #content_wrapper {
-    max-width: 28em;
+    .content_box();
+
+    max-width: @middle_width;
     position: relative;
-    background: @content_bg;
-    margin: 0.6em auto 1.1em auto;
-    padding: 2.8em;
+    margin: 1rem auto 1rem auto;
+    padding: 2rem;
     display: none; /* Shown by Javascript */
     overflow: auto;
 }
-span.drop + p {
-    text-indent: -0.4em;
-}
 
 p {
-    margin: 0;
-    -webkit-transition: text-indent 0.25s ease;
-            transition: text-indent 0.25s ease;
+    margin: 1rem 0rem;
 }
 
 hr {
@@ -118,62 +154,51 @@ hr {
     height: 2px;
 }
 
-p + p, p + img + p, p + hr + p {
-    text-indent: 1.6em;
-}
-
-ul {
-    margin: 0;
-    padding: 0 0 0 1em;
-}
-
-ul.options {
-    border: 2px solid #876;
+.options {
+    .content_box();
     padding: 0;
     margin-top: 0.5em;
     margin-bottom: 0.7em;
     list-style-type: none;
-    border-radius: 4px;
-}
 
-ul.options li {
-    border-bottom: 1px solid #876;
-    padding: 0.5em;
-}
+    li {
+        padding: 0.5rem;
+        border-bottom: 1px solid darken(@content_bg, 10%);
+        text-align: center;
 
-ul.options li:hover {
-    background-color: rgba(153,136,119,0.2);
-    cursor: pointer;
-}
+        &:hover {
+            background: #fafafa;
+        }
 
-ul.options li:last-child {
-    border-bottom: none;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
 }
 
 h1 {
-    font-size: 1.0em;
-    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 24px;
     letter-spacing: 2px;
-    margin: 2.3em 0 1.1em 0;
     color: #210;
-    text-align: center;
-}
-
-h1:first-child {
-    margin-top: 0;
 }
 
 a {
-    color: #900;
+    color: @link_color;
     text-decoration: none;
     border-bottom: 1px solid transparent;
+
+    &.raw {
+        /* External link */
+    }
+
+    &:hover {
+        color: lighten(@link_color, 20%);
+    }
+
+
 }
-a.raw {
-    padding-right: 14px;
-}
-a:hover {
-    border-bottom: 1px dotted #900;
-}
+
 
 img.float_right {
     float: right;
@@ -192,27 +217,28 @@ img.float_left {
     position: fixed;
     width: 100%;
     max-width: 56em;
-    top: 2.2em;
+    top: 2rem;
     left: 0;
     right: 0;
     margin: 0 auto;
     display: none; /* Shown by Javascript */
 }
 .tools {
+    .content_box();
+
     padding: 0.6em;
     width: 8.9em;
-    background: #cec3ae;
     position: absolute;
-}
-.tools p {
-    font-size: 0.95em;
-    line-height: 1.5em;
-}
-.tools.left {
-    left: 0.4em;
-}
-.tools.right {
-    right: 0.4em;
+
+    &.left {
+        left: 0.7rem;
+    }
+
+    &.right {
+        right: 0.7rem;
+    }
+
+
 }
 
 .tools h1 {
@@ -221,44 +247,59 @@ img.float_left {
     border-bottom: 1px solid #321;
     margin-bottom: 0.6em;
 }
+
 .buttons {
     padding-top: 0.6em;
     margin-top: 0.6em;
-    border-top: 1px solid #321;
     text-align: center;
-}
-.buttons button {
-    font-size: 0.8em;
-    background: #876;
-    color: #e6e6c6;
-    border: none;
-    padding: 0.3em 1.0em;
-    cursor: pointer;
-    border-radius: 4px;
-}
-.buttons button:hover {
-    background: #987;
-}
-.buttons button + button {
-    margin-left: 0.3em;
-}
-.buttons button[disabled], .buttons button[disabled]:hover {
-    background: #ba9;
-    color: #dcb;
-    cursor: default;
+
+    button {
+        border: none;
+        color: black;
+        margin: 0.2rem;
+        padding: 0.2rem 1rem;
+        background: @link_color;
+        font-size: 1rem;
+        font-family: @body_font;
+        border-bottom: 1px solid darken(@link_color, 10%);
+        border-right: 1px solid darken(@link_color, 10%);
+        box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2),
+                    0 0 2px 0px rgba(0,0,0,0.2);
+
+        &:hover {
+            background: lighten(@link_color, 10%);
+        }
+
+        &:active {
+            background: lighten(@link_color, 30%);
+        }
+
+        &:disabled {
+            background: desaturate(@link_color, 40%);
+            color: black;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+
+    }
+
 }
 
+
 #legal {
-    max-width: 33em;
-    color: #654;
+    max-width: 32rem;
+    color: rgba(0,0,0,0.5);
     margin: 1em auto 0 auto;
     padding-bottom: 2.2em;
     display: none; /* Shown by Javascript */
 }
 #legal p {
-    font-size: 0.7em;
-    line-height: 1.3em;
-    margin-bottom: 0.5em;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    margin-bottom: 0.2rem;
 }
 #legal p + p {
     text-indent: 0;
@@ -308,22 +349,20 @@ img.float_left {
 
 .progress_bar {
     position: relative;
-    overflow: hidden;
-    margin: 0.6em 0;
+    margin: 0rem;
+    width: 496px;
 }
 .progress_bar_track {
     z-index: 100;
-    background: rgba(255,255,255,0.25);
-    border: 2px solid #876;
-    height: 0.75em;
-    width: 27.7em;
+    border: 1px solid rgba(0,0,0,0.6);
+    height: 1rem;
+    width: 496px;
     clear: both;
-    border-radius: 4px;
 }
 .progress_bar_color {
-    background: #987;
+    background: @link_color;
     width: 0;
-    height: 0.75em;
+    height: 1rem;
 }
 .progress_bar span {
     z-index: 100;
@@ -347,6 +386,8 @@ img.float_left {
     display: none;
 }
 
+/* Animation for .fade elements */
+
 @keyframes fade_in{
     from {
         color: rgba(0,0,0,0);
@@ -369,3 +410,5 @@ img.float_left {
     animation: fade_in 500ms ease-in-out;
     -webkit-animation: fade_in 500ms ease-in-out;
 }
+
+@import "undum-mobile";

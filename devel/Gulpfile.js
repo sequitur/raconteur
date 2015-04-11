@@ -35,12 +35,12 @@ var bundle = function () {
     .pipe(buffer())
     .pipe(sourcemaps.init({
       loadMaps: true,
-      sourceRoot: "../../../"
+      includeContent: true
     }))
     .on('error', gutil.log.bind(gutil, 'Sourcemaps Error'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./build/game'))
-    .pipe(reload({stream: true}));
+    .pipe(reload({stream: true, once: true}));
 }
 
 /*
@@ -88,5 +88,7 @@ gulp.task('serve', ['default'], function () {
     port: 9000,
     server: './build'
   });
+
+  gulp.watch('less/*.less', ['less']);
 
 });
