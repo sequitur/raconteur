@@ -1,9 +1,19 @@
 # Raconteur
 
-Raconteur is a wrapper library for Undum, a system for writing hypertext
-interactive fiction. Raconteur that to provide a more programmer-friendly
-API as well as a bundle of commonly-needed functionality, for novices and
-expert users alike.
+Raconteur makes writing interactive hypertext fiction with Undum straightforward and perhaps even fun. It's a wrapper library that bundles oft-needed functionality and a new, cleaner, CoffeeScript-friendly, DSL-inspired API for defining Undum stories.
+
+```coffeescript
+situation 'west_of_house',
+  content: (character, system, from) -> 
+    """
+    # West of House
+
+    You are standing in an open field west of a white house, with a boarded
+    up front door.
+
+    #{roomContents(character, system)}
+    """
+```
 
 Raconteur is still in active development towards its 1.0 release.
 
@@ -32,6 +42,14 @@ Raconteur is still in active development towards its 1.0 release.
   management (Browserify + npm).
 - A complete code refactoring of Undum and Raconteur itself with testability
   in mind, allowing the use of testing frameworks with Undum stories.
+
+## Installation
+
+For now, clone this git repository. Then, from the root:
+
+    npm install
+
+You will find an useful Gulpfile.js in devel/, among other tools. Eventually, Raconteur will be distributed as a ready-to-use template so that you'll be able to download, install dependencies with `npm install`, and get hacking.
 
 ## Code examples
 
