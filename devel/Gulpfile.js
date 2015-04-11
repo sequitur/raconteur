@@ -66,6 +66,7 @@ bundler.on('log', gutil.log);
 gulp.task('less', function () {
   return gulp.src('less/undum.less')
         .pipe(less())
+        .on('error', gutil.log.bind(gutil, 'Less error'))
         .pipe(gulp.dest('./build/css/'))
         .pipe(reload({stream: true}));
 });
@@ -91,5 +92,6 @@ gulp.task('serve', ['default'], function () {
   });
 
   gulp.watch('less/*.less', ['less']);
+  gulp.watch('html/*.html', ['html']);
 
 });

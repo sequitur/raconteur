@@ -1,10 +1,8 @@
-@media screen and (max-width: 640px)
+@media screen and (max-width: 715px) {
 
-{
     body {
         margin: 0;
-        font-size: 18.5px;
-        line-height: 1.5em;
+        line-height: 1.5rem;
         -webkit-text-size-adjust: none;
     }
 
@@ -19,13 +17,20 @@
 
     /* Title */
     #title {
-        margin-top: -1.5em;
+        margin-top: 20px;
         padding: 1.0em 0.5em;
+        box-shadow: none;
+        max-width: 100%;
+        h1 {
+            font-size: 3rem;
+            line-height: 4rem;
+        }
     }
     #title .label  {
         font-size: 0.65em;
-        max-width: 25em;
+        max-width: 80%;
         padding: 2.0em;
+        box-shadow: none;
     }
 
     /* Side panels */
@@ -33,8 +38,10 @@
         position: static;
     }
     .tools {
+        background: @text-bg;
         position: relative;
         width: auto;
+        box-shadow: none;
     }
     #character_panel {
         display: none;
@@ -48,17 +55,21 @@
 
     /* Main content */
     #content_wrapper {
-        width: 90vw;
+        width: auto;
         padding: 2.0em;
+        border-radius: 0;
     }
     #content {
         font-size: 16px;
         line-height: 1.5em;
+
+        h1 {
+            margin-bottom: 1rem;
+        }
     }
 
     /* Toolbar and menu */
     #toolbar {
-        .content_box();
         position: fixed;
         z-index: 300;
         left: 0;
@@ -67,8 +78,8 @@
         height: 36px;
         padding: 8px;
         overflow: hidden;
+        .material();
     }
-
     #toolbar h1 {
         float: left;
         font-weight: normal;
@@ -76,20 +87,21 @@
         margin: 8px 0 0 0;
         padding: 0 10px;
         color: #fc6;
-        text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
     }
-
     #toolbar .nav {
         float: right;
         margin: 0;
-
-        a {
-            display: block;
-            height: 
-            background: black;
-
-        }
     }
+
+    .icon-menu {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .menubars {
+        fill: #a0a0a0;
+    }
+
 
     #menu {
         display: none;
@@ -98,23 +110,45 @@
         left: 0;
         right: 0;
         font-size: 16px;
+        background: #f0f0dd;
         z-index: 200;
         list-style-type: none;
         padding: 10px 0 0 0;
         margin: 0;
-        opacity: 0.95;
-        -webkit-box-shadow: 0 0 16px rgba(0,0,0,0.75);
-        box-shadow: 0 0 16px rgba(0,0,0,0.75);
-    }
-    #menu li {
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-    }
-    #menu li:last-child {
-        border-bottom: none;
-    }
-    #menu a {
-        display: block;
-        padding: 10px 20px;
-    }
+
+
 }
 
+    #menu-button {
+        position: relative;
+        display: block;
+        .material_shadow();
+        .material_colors(@title-bg);
+        width: 3rem;
+        font-size: 1rem;
+        padding: 0.2rem;
+        border-radius: 2px;
+        text-align: center;
+        color: black;
+
+        &:hover {
+            background: lighten(@title-bg, 20%);
+        }
+
+        &:active {
+            background: lighten(@title-bg, 20%);
+            box-shadow: none;
+        }
+    }
+
+#menu li {
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+
+}
+
+#menu a {
+    display: block;
+    padding: 10px 20px;
+}
+
+}

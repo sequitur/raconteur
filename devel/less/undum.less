@@ -1,54 +1,115 @@
-
 /*
-    We're using a Material Design-inspired colour palette and look as our
-    default here.
+    Raconteur template stylesheet
 
-    Indigo (Main colour):
-        500 #3f51b5
-        100 #c5cae9
-        700 #303f9f
+    Adapted from the Mere Anarchy stylesheet.
 
-    ORange (Accent colour):
-        500 #ff9800
-
-    White:
-        #ffffff
 */
 
-@body_bg: #3f51b5; // Indigo 500
-@content_bg: white;
-@title_bg: #c5cae9; // Indigo 100
-@text_color: rgba(0,0,0,0.87); // 87% opacity black
-@link_color: #ff9800;
+@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic);
 
-/* Typography */
+// Definitions
 
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+// 1. Typography
 
-@body_font: 'Roboto', sans-serif;
-@root_font_size: 18px;
+// 1.1 Font Stacks
+@body-font: 'Noto Serif', serif;
+@header-font: 'Noto Serif', serif;
+@cursive-font: 'Noto Serif', serif;
 
-/* Layout */
+// 1.2 Font Sizing
 
-@middle_width: 32rem;
+html { font-size: 14pt; } // Everything is relative to this
 
-.material_box(@bg) {
+@body-size: 1rem;
+@header-size: 2.5rem;
+@title-size: 3rem; 
+
+// Colours
+
+@text-colour: rgba(0,0,0,0.9);
+@anchor-colour: #D29506;
+@option-colour: #125D79;
+
+@button-background: #FF9800;
+@button-colour: #EDEDDE;
+
+// Backgrounds
+
+@text-bg: #fafafa;
+@title-bg: #FF9800; // Orange
+@body-bg: #78909C; // Blue grey
+
+// Mixins
+
+.fade-in() {
+    animation: fadeIn 500ms ease-in-out;
+    -webkit-animation: fadeIn 500ms ease-in-out;
+    //-moz-animation: fadeIn 500ms;
+    a {
+        animation: fadeInA 500ms ease-in-out;
+        -webkit-animation: fadeInA 500ms ease-in-out;
+    }
+
+}
+
+.material_shadow() {
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.25),
+                1px 0px 2px 0px rgba(0,0,0,0.10);
+}
+
+.material_colors(@bg) {
     background: @bg;
-    border-right: 1px solid darken(@bg, 20%);
-    border-bottom: 1px solid darken(@bg, 20%);
-    box-shadow: 2px 2px 1px 1px fade(black, 40%),
-                0 0 2px 2px fade(black, 10%);
+    border-bottom: 1px solid darken(@bg, 10%);
+    border-right: 1px solid darken(@bg, 10%);
 }
 
-.content_box() {
-    .material_box(@content_bg)
+.material() {
+    .material_colors(@text-bg);
+    .material_shadow();
 }
+
+/* Basic element styling */
 
 body {
-    background: @body_bg;
-    color: @text_color;
-    font-size: @root_font_size;
-    font-family: @body_font;
+    background: @body-bg;
+    font-family: @body-font;
+    font-size: @body-size;
+    line-height: 1.6em;
+    background-attachment: fixed;
+    overflow-y: scroll;
+    color: @text-colour;
+}
+
+h1 {
+    font-family: @cursive-font;
+    font-size: @header-size;
+    letter-spacing: 2px;
+    margin: 1em 0;
+    text-align: center;
+    font-weight: normal;
+}
+
+p {
+    margin: 0;
+    -webkit-transition: text-indent 0.25s ease;
+            transition: text-indent 0.25s ease;
+
+}
+
+#content {
+
+    p {
+        text-indent: 2rem;
+        line-height: 1.6rem;
+    }
+
+    h1 {
+        line-height: 2rem;
+    }
+
+    h1 + p {
+        text-indent: 0;
+    }
 }
 
 /* Basic structure */
@@ -58,147 +119,185 @@ body {
 }
 
 #mid_panel {
-    margin: 0 10.5em;
+    margin: 0 10.5rem;
 }
 
 /* The title block */
-
+#title, #title .label, #content, .tools {
+    border-radius: 2px;
+}
 #title {
-    .material_box(@title_bg);
-    max-width: @middle_width;
-    margin: 2rem auto 1rem auto;
-    background: @title_bg;
-    padding: 32px;
+    max-width: 28em;
+    margin: 2.2rem auto 1.1rem auto;
+    padding: 2.6rem;
     cursor: pointer; /* Until we click to start. */
+    border-radius: 0.5rem;
+    .material_shadow();
+    .material_colors(@title-bg);
+}
+#title .label {
+    .material();
+    overflow: hidden;
+    padding: 1.5rem;
+    margin: auto;
+    max-width: 18rem;
+    position: relative;
+}
 
+#title h1 {
+    font-family: @header-font;
+    font-size: @title-size;
+    line-height: 1em;
+    font-weight: normal;
+    padding: 0;
+    border-bottom: none;
+    margin: 1rem 0;
+}
+#title h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+    text-align: center;
+    font-family: @cursive-font;
+    margin: 1.1em 0 0 0;
+}
+#title h3 {
+    font-size: 1.0em;
+    font-weight: normal;
+    text-align: center;
+    margin: 1.1em 0 0 0;
+}
 
-     .label {
-        .content_box();
-        overflow: hidden;
-        padding: 2.0em;
-        margin: auto;
-        max-width: 18em;
-        position: relative;
-    }
-
-    h1 {
-        font-size: 2rem;
-        line-height: 2rem;
-        font-weight: normal;
-        padding-bottom: 1.1em;
-        border-bottom: 1px solid #321;
-    }
-
-    h2 {
-        font-size: 20px;
-        line-height: 20px;
-        font-weight: normal;
-        text-align: center;
-        margin: 1.1em 0 0 0;
-    }
-
-    h3 {
-        font-size: 1.0em;
-        font-weight: normal;
-        text-align: center;
-        margin: 1.1em 0 0 0;
-    }
-
-
-    .click_message {
-        display: none;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        font-size: 0.9em;
-        font-style: italic;
-        text-align: center;
-        color: #987;
-    }
-
-    .noscript_message {
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        font-size: 0.9em;
-        font-style: italic;
-        text-align: center;
-        color: #943;
-    }
-
+#title .click_message {
+    display: none;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: center;
+}
+#title .noscript_message {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: center;
 }
 
 /* Main content */
 #content_wrapper {
-    .content_box();
-
-    max-width: @middle_width;
+    .material();
+    max-width: 28em;
     position: relative;
-    margin: 1rem auto 1rem auto;
-    padding: 2rem;
+    margin: 0.6em auto 1.1em auto;
+    padding: 2.8em;
     display: none; /* Shown by Javascript */
     overflow: auto;
+    border-radius: 0.2rem;
 }
 
-p {
-    margin: 1rem 0rem;
+span.drop + p {
+    text-indent: -0.4em;
 }
 
 hr {
     border: none;
-    background-color: rgba(0,0,0,0.25);
+    background-color: rgba(128,128,128,0.5);
     margin: -1px 0 -1px -2.8em;
-    width: 1.1em;
-    height: 2px;
+    width: 1em;
+    height: 1px;
+    float: left; // Stops hr elements from interfering with text flow.
+    .fade-in();
+    display: none;
+
+    p + & {
+        // Stops hr elements from "stacking" with one another.
+        display: block;
+    }
+
 }
 
-.options {
-    .content_box();
+#content h1 +p, #content h1 + img + p {
+    text-indent: 0;
+}
+
+#content h1 + p:first-line,
+#content h1 + img + p:first-line {
+    font-weight: normal;
+    font-style: italic;
+}
+#content h1 + p:first-letter,
+#content h1 + img + p:first-letter {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    float: left;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 2rem;
+    margin-right: -.1rem;
+}
+
+ul {
+    margin: 0;
+    padding: 0 0 0 1em;
+}
+ul.options {
     padding: 0;
     margin-top: 0.5em;
     margin-bottom: 0.7em;
     list-style-type: none;
+    border-radius: 4px;
+}
+ul.options li {
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding: 0.5em;
+    text-align: center;
 
-    li {
-        padding: 0.5rem;
-        border-bottom: 1px solid darken(@content_bg, 10%);
-        text-align: center;
+    a {
+        color: @option-colour;
+        transition: color 0.2s ease-in;
 
         &:hover {
-            background: #fafafa;
+            color: lighten(@option-colour, 10%);
         }
+    }
 
-        &:last-child {
-            border-bottom: none;
-        }
+    &:hover{
+        @hover-colour: lighten(spin(@option-colour, -40), 50%);
+        background:
+            linear-gradient(to right, fade(@hover-colour, 0%)0%,
+            fade(@hover-colour, 80%) 50%,
+            fade(@hover-colour, 0%) 100%);
+        cursor: pointer;
     }
 }
 
-h1 {
-    font-size: 24px;
-    line-height: 24px;
-    letter-spacing: 2px;
-    color: #210;
+ul.options li:last-child {
+    border-bottom: none;
 }
 
+
+h1:first-child {
+    margin-top: 0;
+}
 a {
-    color: @link_color;
+    color: @anchor-colour;
     text-decoration: none;
     border-bottom: 1px solid transparent;
-
-    &.raw {
-        /* External link */
-    }
-
-    &:hover {
-        color: lighten(@link_color, 20%);
-    }
-
-
+    transition: color 0.1s ease-in;
 }
-
+a.raw {
+    padding-right: 14px;
+    background: transparent url("../img/external_link.png") no-repeat right 4px;
+}
+a:hover {
+    color: lighten(@anchor-colour, 10%);
+}
 
 img.float_right {
     float: right;
@@ -217,96 +316,89 @@ img.float_left {
     position: fixed;
     width: 100%;
     max-width: 56em;
-    top: 2rem;
+    top: 2.2em;
     left: 0;
     right: 0;
     margin: 0 auto;
     display: none; /* Shown by Javascript */
 }
 .tools {
-    .content_box();
-
     padding: 0.6em;
-    width: 8.9em;
-    position: absolute;
-
-    &.left {
-        left: 0.7rem;
-    }
-
-    &.right {
-        right: 0.7rem;
-    }
-
-
+    width: 9rem;
+    .material();
+}
+.tools p {
+    font-size: 0.95em;
+    line-height: 1.5em;
+}
+.tools.left {
+    float: left;
+    left: 0.4em;
+}
+.tools.right {
+    float: right;
+    right: 0.4em;
 }
 
 .tools h1 {
-    font-size: 1.0em;
+    font-size: 1.5rem;
     font-weight: normal;
-    border-bottom: 1px solid #321;
-    margin-bottom: 0.6em;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
-
 .buttons {
     padding-top: 0.6em;
     margin-top: 0.6em;
+    border-top: 1px solid #321;
     text-align: center;
+}
+.buttons button {
+    font-size: 0.8em;
+    background: @button-background;
+    color: @button-colour;
+    border: 1px rgba(0,0,0,0.2) solid;
+    padding: 0.3em 1.0em;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: rgba(0,0,0,0.4) 0px 0px 2px 0px;
 
-    button {
-        border: none;
-        color: black;
-        margin: 0.2rem;
-        padding: 0.2rem 1rem;
-        background: @link_color;
-        font-size: 1rem;
-        font-family: @body_font;
-        border-bottom: 1px solid darken(@link_color, 10%);
-        border-right: 1px solid darken(@link_color, 10%);
-        box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2),
-                    0 0 2px 0px rgba(0,0,0,0.2);
+    &:hover {
+        background: lighten(@button-background, 20%);
+    }
 
-        &:hover {
-            background: lighten(@link_color, 10%);
-        }
+    &[disabled], &[disabled]:hover {
+        background: darken(@button-background, 20%);
+        color: @button-background;;
+        cursor: default;
+    }
 
-        &:active {
-            background: lighten(@link_color, 30%);
-        }
-
-        &:disabled {
-            background: desaturate(@link_color, 40%);
-            color: black;
-        }
-
-        &:focus {
-            outline: none;
-        }
-
-
+    & + button {
+        margin-left: 0.3rem;
     }
 
 }
 
-
 #legal {
-    max-width: 32rem;
-    color: rgba(0,0,0,0.5);
+    max-width: 33em;
     margin: 1em auto 0 auto;
     padding-bottom: 2.2em;
     display: none; /* Shown by Javascript */
-}
-#legal p {
-    font-size: 0.8rem;
-    line-height: 1rem;
-    margin-bottom: 0.2rem;
-}
-#legal p + p {
-    text-indent: 0;
+
+    p {
+        font-size: 0.7rem;
+        line-height: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: #d0d0d0;
+
+        & + p {
+            text-indent: 0;
+        }
+    }
+
 }
 
 #character {
-    font-size: 1.0em;
+    font-size: 0.9rem;
     line-height: 1.4em;
 }
 #qualities .quality, #character_text {
@@ -326,6 +418,7 @@ img.float_left {
 #qualities span {
     position: relative;
     z-index: 100;
+    display: block;
 }
 #qualities span.name {
     float: left;
@@ -333,8 +426,29 @@ img.float_left {
 #qualities span.value {
     float: right;
 }
+
+/* Styles for specific quality groups */
+
+#g_inventory{
+    .qualities_in_group {
+
+        div {
+
+            .name {
+                width: 100%;
+            }
+
+            .value {
+                width: 90%;
+            }
+
+        }
+
+    }
+}
+
 .highlight {
-    background: rgba(255, 255, 0, 0.75);
+    background: rgba(255, 255, 255, 0.75);
     position: absolute;
     left: -4px;
     right: -4px;
@@ -343,32 +457,35 @@ img.float_left {
 }
 #qualities h2 {
     margin: 0.5em 0 0.25em 0;
-    font-size: 1.0em;
-    border-bottom: 1px solid #321;
+    font-size: 1.5rem;
+    font-weight: normal;
+    font-family: @header-font;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    text-align: left;
 }
 
 .progress_bar {
     position: relative;
-    margin: 0rem;
-    width: 496px;
+    left: -2em;
+    margin: 0;
 }
 .progress_bar_track {
     z-index: 100;
-    border: 1px solid rgba(0,0,0,0.6);
-    height: 1rem;
-    width: 496px;
+    background: rgba(0,0,0,0.1);
+    height: 0.75em;
+    width: 26.6em;
     clear: both;
 }
 .progress_bar_color {
-    background: @link_color;
+    background: @title-bg;
     width: 0;
-    height: 1rem;
+    height: 0.75em;
 }
 .progress_bar span {
     z-index: 100;
 }
 .progress_bar .name {
-    font-weight: bold;
+    font-weight: normal;
 }
 .progress_bar .value {
     float: right;
@@ -386,9 +503,23 @@ img.float_left {
     display: none;
 }
 
-/* Animation for .fade elements */
+#info_panel p {
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
 
-@keyframes fade_in{
+    & + p {
+        text-indent: 0;
+    }
+}
+
+/* Animate newly inserted DOM elements within content */
+
+/* "Why don't we just use opacity?"
+   "Because opacity, creates massive jank and this doesn't. Browsers!"
+*/
+
+@keyframes fadeIn {
     from {
         color: rgba(0,0,0,0);
     }
@@ -397,18 +528,53 @@ img.float_left {
     }
 }
 
-@-webkit-keyframes fade_in{
+@-webkit-keyframes fadeIn {
     from {
         color: rgba(0,0,0,0);
     }
     to {
         color: rgba(0,0,0,1);
+    }
+}
+
+@keyframes fadeInA {
+    0% {
+        color: transparentize(@anchor-colour, 1);
+    }
+    100% {
+        color: transparentize(@anchor-colour, 0);
+    }
+}
+
+@-webkit-keyframes fadeInA {
+    from {
+        color: transparentize(@anchor-colour, 1);
+    }
+    to {
+        color: transparentize(@anchor-colour, 0);
+    }
+}
+
+@keyframes fadeInS {
+    0% {
+        color: transparentize(@option-colour, 1);
+    }
+    100% {
+        color: @option-colour;
+    }
+}
+
+@-webkit-keyframes fadeInS {
+    from {
+        color: transparentize(@option-colour, 1);
+    }
+    to {
+        color: @option-colour;
     }
 }
 
 .fade {
-    animation: fade_in 500ms ease-in-out;
-    -webkit-animation: fade_in 500ms ease-in-out;
+    .fade-in();
 }
 
-@import "undum-mobile";
+@import "undum-mobile.less";
