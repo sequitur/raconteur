@@ -1,7 +1,7 @@
 var situation = require('raconteur/situation.js'),
     $ = require('jquery'),
     undum = require('undum-commonjs'),
-    tools = require('raconteur/tools.js'),
+    oneOf = require('raconteur/oneOf.js'),
     elements = require('raconteur/elements.js'),
     qualities = require('raconteur/qualities.js');
 
@@ -132,10 +132,10 @@ situation('iterators', {
   different content in ${a('various ways').writer('stopper')}.
   `,
   writers: {
-    iterator: tools.oneOf(['Cat', 'Dog', 'Crow', 'Alpaca']).randomly(),
+    iterator: oneOf(['Cat', 'Dog', 'Crow', 'Alpaca']).randomly(),
     consistent: () => myIterators.consistentIterator(),
-    cycler: tools.oneOf(['Spring', 'Summer', 'Fall', 'Winter']).cycling(),
-    stopper: tools.oneOf(['First click', 'Second click', 'Another click']).stopping()
+    cycler: oneOf(['Spring', 'Summer', 'Fall', 'Winter']).cycling(),
+    stopper: oneOf(['First click', 'Second click', 'Another click']).stopping()
   },
   tags: ['testing-option'],
   optionText: 'Iterators'
@@ -169,7 +169,7 @@ undum.game.init = function (character, system) {
   character.qualities.perception = 10;
   character.qualities.size = 1;
   myIterators.consistentIterator =
-    tools.oneOf(['Blue', 'Black', 'Green', 'Red', 'White'])
+    oneOf(['Blue', 'Black', 'Green', 'Red', 'White'])
     .inRandomOrder(system);
 };
 
