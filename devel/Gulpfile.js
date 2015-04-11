@@ -35,7 +35,8 @@ var bundle = function () {
     .pipe(buffer())
     .pipe(sourcemaps.init({
       loadMaps: true,
-      includeContent: true
+      includeContent: true,
+      debug: true
     }))
     .on('error', gutil.log.bind(gutil, 'Sourcemaps Error'))
     .pipe(sourcemaps.write('./'))

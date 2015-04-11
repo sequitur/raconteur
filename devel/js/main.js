@@ -1,11 +1,12 @@
 var situation = require('raconteur/situation.js'),
     $ = require('jquery'),
     undum = require('undum-commonjs'),
-    tools = require('raconteur/tools.js');
+    tools = require('raconteur/tools.js'),
+    elements = require('raconteur/elements.js'),
+    qualities = require('raconteur/qualities.js');
 
-var a = situation.a,
-    span = situation.span,
-    qualities = situation.qualities;
+var a = elements.a,
+    span = elements.span;
 
 undum.game.id = "my_game_id";
 undum.game.version = "1.0";
