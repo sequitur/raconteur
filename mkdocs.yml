@@ -3,3 +3,4 @@ theme: readthedocs
 pages:
   - ['index.md', 'Introduction', 'What is Raconteur?']
   - ['situation.md', 'API Documentation', 'Situation.js']
+  - ['elements.md', 'API Documentation', 'Elements.js']
