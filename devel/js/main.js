@@ -19,9 +19,15 @@ situation('start', {
   choices: ['#testing-option']
 });
 
+situation ('return', {
+  content: 'Choose an option...',
+  optionText: 'Return',
+  choices: ['#testing-option']
+});
+
 situation('functions-as-properties', {
-  content: (character, system, from) =>
-    `
+  content (character, system, from) {
+    return `
     This property of this situation is outputted by a function, which allows
     us to incorporate variables such as the name of the situation we came
     from; in this case, "${from}."
@@ -30,9 +36,10 @@ situation('functions-as-properties', {
     functions; the notable exception is optionText. Those functions are
     passed the character and system objects, in that order, and a third
     object that is usually either the current situation, or the situation
-    we just came from.`,
+    we just came from.`},
   tags: ['testing-option'],
-  optionText: 'Functions as properties'
+  optionText: 'Functions as properties',
+  choices: ['return']
 });
 
 situation('markdown-features', {
@@ -50,7 +57,8 @@ situation('markdown-features', {
   
   Additionally, we also support "smart quotes" and -- dashes.`,
   tags: ['testing-option'],
-  optionText: 'Markdown support'
+  optionText: 'Markdown support',
+  choices: ['return']
 });
 
 situation('special-links', {
@@ -72,7 +80,8 @@ situation('special-links', {
     'inserter-link': "-- like this"
   },
   tags: ['testing-option'],
-  optionText: 'Special Links'
+  optionText: 'Special Links',
+  choices: ['return']
 });
 
 situation('custom-actions', {
@@ -93,7 +102,8 @@ situation('custom-actions', {
     }
   },
   tags: ['testing-option'],
-  optionText: 'Special Actions'
+  optionText: 'Special Actions',
+  choices: ['return']
 });
 
 situation('randomness', {
@@ -108,37 +118,45 @@ situation('randomness', {
     ${["dog", "cat", "alpaca", "crow"].shuffle(system).join(', ')}.
     `,
   tags: ['testing-option'],
-  optionText: 'Randomness' 
+  optionText: 'Randomness' ,
+  choices: ['return']
 });
 
 var myIterators = {};
 
 situation('iterators', {
-  content: (character, system, from) =>
-  `
-  # Iterators
+  animal: oneOf('cat', 'crow', 'alpaca').cycling(),
+  content (character, system, from) {
+    console.log("got here");
+    console.log(this);
+    return `
+    # Iterators
 
-  Iterators are an useful feature for generating adaptive text. For example,
-  clicking ${a('this link').writer('iterator')} will output a
-  new paragraph with a random animal.
+    Iterators are an useful feature for generating adaptive text. For example,
+    clicking ${a('this link').writer('iterator')} will output a
+    new paragraph with a random animal.
 
-  Initialising iterators during your init function will make them even more
-  useful, since it lets you pass the system object on to them to ensure
-  consistency between saves. For example, ${a('this link')
-  .writer('consistent')} will produce the same output every
-  time.
+    Initialising iterators during your init function will make them even more
+    useful, since it lets you pass the system object on to them to ensure
+    consistency between saves. For example, ${a('this link')
+    .writer('consistent')} will produce the same output every
+    time.
 
-  Other iterators allow you to ${a('cycle').writer('cycler')} through
-  different content in ${a('various ways').writer('stopper')}.
-  `,
+    Other iterators allow you to ${a('cycle').writer('cycler')} through
+    different content in ${a('various ways').writer('stopper')}.
+
+    And finally, OneOf iterator objects can be used directly in situations:
+    ${this.animal}.
+    ` },
   writers: {
-    iterator: oneOf(['Cat', 'Dog', 'Crow', 'Alpaca']).randomly(),
+    iterator: oneOf('Cat', 'Dog', 'Crow', 'Alpaca').randomly(),
     consistent: () => myIterators.consistentIterator(),
-    cycler: oneOf(['Spring', 'Summer', 'Fall', 'Winter']).cycling(),
-    stopper: oneOf(['First click', 'Second click', 'Another click']).stopping()
+    cycler: oneOf('Spring', 'Summer', 'Fall', 'Winter').cycling(),
+    stopper: oneOf('First click', 'Second click', 'Another click').stopping()
   },
   tags: ['testing-option'],
-  optionText: 'Iterators'
+  optionText: 'Iterators',
+  choices: ['return']
 });
 
 situation('progress-bar', {
@@ -152,7 +170,8 @@ situation('progress-bar', {
     through Undum's own API.
     `,
   tags: ['testing-option'],
-  optionText: 'Progress bars'
+  optionText: 'Progress bars',
+  choices: ['return']
 });
 
 qualities({

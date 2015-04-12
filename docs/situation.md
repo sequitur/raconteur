@@ -92,6 +92,39 @@ The output from the function is taken as a string to be parsed as markdown, and 
 
 Inside a content function, the value of `this` is bound to the situation object itself, allowing you to refer to properties of the situation.
 
+#### A note about indentation
+
+Markdown cares about indentation for things such as `<pre>` blocks and nested lists. However, we as programmers care about indentation to keep our code readable. As a compromise between the two, Raconteur will normalise indentation in content strings by doing the following:
+
+- Finding the smallest level of indentation on a non-empty line;
+- Stripping that level of indentation out of every line.
+
+This means that if you write:
+
+```javascript
+`
+  Lorem ipsum dolor sit amet.
+
+    var foo = x;
+`
+```
+
+Then Raconteur will normalise that to:
+
+```markdown
+Lorem ipsum dolor sit amet.
+
+  var foo = x;
+```
+
+So that when this is parsed as markdown, the first line will be a paragraph and the second line will be a code block. If, for some reason, you need an entire situation's content to be a preformatted code block, you can use a fenced code block:
+
+~~~markdown
+```
+This is a fenced code block.
+```
+~~~
+
 ### tags :: Array (from undum.Situation)
 
 A list of tags. See Undum documentation.
