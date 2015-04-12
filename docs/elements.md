@@ -73,6 +73,10 @@ elem.content('bar').id('bar_span')
 
 Every ElementHelper object supplies the following methods. All of them return a new, modified ElementHelper which inherits from the ElementHelper that the method was called on. ElementHelpers are immutable to make this safe; otherwise, an ElementHelper could have its data changed by alterations to another ElementHelper further up its prototype chain.
 
+## alt(altText) -> ElementHelper
+
+Returns a new ElementHelper with the given string as its `_alt` property. This property is used as the element's `alt` attribute.
+
 ## class :: String -> ElementHelper
 
 Returns a new ElementHelper with the given String as an additional class. This method is *additive,* so it adds new classes to the element. To completely change the element's classes, use ElementHelper#Classes
@@ -92,6 +96,10 @@ Returns a new ElementHelper with the given id. This string is then used as the v
 ## ref :: String -> ElementHelper
 
 Returns a new ElementHelper with the given string as its `_ref` property. This property is used as the value of the element's `href` attribute.
+
+## src(url) -> ElementHelper
+
+Returns a new ElementHelper with the given string as its `_src` property. This property is used as the value of the element's `src` attribute.
 
 ## url :: String -> ElementHelper, situation :: String -> ElementHelper
 
@@ -118,4 +126,30 @@ e.writer('foo')     // e.type('writer').ref('foo')
 e.replacer('foo')   // e.type('replacer').ref('foo')
 e.inserter('foo')   // e.type('inserter').ref('foo')
 e.action('foo')     // e.type('action').ref('foo')
+```
+
+# Exports
+
+`elements.js` exports the following methods:
+
+## a(content) -> elementHelper
+
+Returns a new `<a>` elementHelper object, with its content set to the argument.
+
+## span(content) -> elementHelper
+
+Returns a new `<span>` elementHelper object, with its content set to the argument.
+
+## img(alt) -> elementHelper
+
+Returns a new `<img>` elementHelper object, with its alt text set to the argument
+
+## element(tag) -> elementHelper
+
+Returns a new elementHelper object for the given tag. Usually, this can be called once to define your own custom element helpers:
+
+```javascript
+var elements = require('raconteur/elements.js');
+var em = elements.element('em');
+var glow = function (content) { return em.class('glow').content(content); };
 ```

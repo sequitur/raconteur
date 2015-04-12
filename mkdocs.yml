@@ -2,5 +2,7 @@ site_name: Raconteur User Documentation
 theme: readthedocs
 pages:
   - ['index.md', 'Introduction', 'What is Raconteur?']
-  - ['situation.md', 'API Documentation', 'Situation.js']
-  - ['elements.md', 'API Documentation', 'Elements.js']
+  - ['philosophy.md', 'Introduction', 'Design Philosophy']
+  - ['situation.md', 'API Documentation', 'situation.js']
+  - ['elements.md', 'API Documentation', 'elements.js']
+  - ['oneOf.md', 'API Documentation', 'oneOf.js']
