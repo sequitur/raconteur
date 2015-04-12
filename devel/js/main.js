@@ -127,8 +127,6 @@ var myIterators = {};
 situation('iterators', {
   animal: oneOf('cat', 'crow', 'alpaca').cycling(),
   content (character, system, from) {
-    console.log("got here");
-    console.log(this);
     return `
     # Iterators
 
@@ -150,7 +148,7 @@ situation('iterators', {
     ` },
   writers: {
     iterator: oneOf('Cat', 'Dog', 'Crow', 'Alpaca').randomly(),
-    consistent: () => myIterators.consistentIterator(),
+    consistent () { return myIterators.consistentIterator(); },
     cycler: oneOf('Spring', 'Summer', 'Fall', 'Winter').cycling(),
     stopper: oneOf('First click', 'Second click', 'Another click').stopping()
   },
@@ -188,7 +186,7 @@ undum.game.init = function (character, system) {
   character.qualities.perception = 10;
   character.qualities.size = 1;
   myIterators.consistentIterator =
-    oneOf(['Blue', 'Black', 'Green', 'Red', 'White'])
+    oneOf('Blue', 'Black', 'Green', 'Red', 'White')
     .inRandomOrder(system);
 };
 
