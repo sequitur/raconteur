@@ -36,11 +36,11 @@ layout: noheader
   </div>
   <div class="six columns codeexample">
     {% highlight coffeescript %}
-    situation 'west-of-house',
-      content: """
-        You are standing in an open field west of a white house,
-        with a boarded up front door.
-      """
+situation 'west-of-house',
+  content: """
+    You are standing in an open field west of a
+    white house, with a boarded up front door.
+  """
     {% endhighlight %}
   </div>
 </div>
@@ -50,9 +50,16 @@ layout: noheader
     <p>
       The Raconteur scaffold comes with everything you need to get started,
       configured out of the box to use a build system, CSS preprocessor, and
-      bundler. Don't worry too much if you don't know what any of those are:
-      I promise they're helpful.
+      bundler. Armed with a text editor (We like
+      <a href="http://sublimetext.com">Sublime</a>), you can start writing
+      your story and prose, rather than support code.
     </p>
+    <p>
+      The scaffold is set up to automate as much work as possible. You can
+      make stylesheet changes and watch them load immediately on a browser.
+      It even automates bundling your game and its assets into a .zip file you
+      can upload to <a href="http://itch.io">Itch.io</a>.
+      </p>
   </div>
   <div class="six columns intro">
     <h2>Adaptive Text</h2>
@@ -74,13 +81,13 @@ layout: noheader
 <div class="row">
   <div class="six columns codeexample">
     {% highlight coffeescript %}
-    situation 'reflecting-pool',
-      content: (character, system) -> """
-        Looking into the pool, you find yourself feeling
-        #{character.sandbox.mood}. It glows with a strange
-        #{this.color} light.
-      """,
-      light: oneOf('blue', 'red', 'green').randomly()
+situation 'reflecting-pool',
+  content: (character, system) -> """
+    Looking into the pool, you find yourself feeling
+    #{character.sandbox.mood}. It glows with a
+    strange #{this.color} light.
+  """,
+  color: oneOf('blue', 'red', 'green').randomly()
     {% endhighlight %}
   </div>
   <div class="six columns intro">

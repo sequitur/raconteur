@@ -1,11 +1,9 @@
 
 /* Definitions */
 
-$brand_background: #E24D00;
+$brand_background: #009688;
 
 .site-title {
-
-  text-align: center;
 
 }
 
@@ -20,7 +18,9 @@ $brand_background: #E24D00;
 
 .bright {
   padding-top: 2rem;
-  background: $brand_background;
+  $color: transparentize($brand_background, 0.1);
+  background: linear-gradient($color, $color),
+              white url(../img/bg.jpg) center/cover;
 
   h1, h2, h3, h4, h5, h6, p {
     color: white;
@@ -28,7 +28,6 @@ $brand_background: #E24D00;
 
   a {
     color: white;
-    border-bottom: 1px solid white;
   }
 
 }
@@ -53,6 +52,8 @@ pre:first-child {
 }
 
 .post-meta {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: right;
+
 }
