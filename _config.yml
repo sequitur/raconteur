@@ -3,8 +3,8 @@ title: Raconteur
 description: > # this means to ignore newlines until "baseurl:"
   Raconteur is a library of tools that makes developing hypertext interactive
   fiction with Undum easy and perhaps even fun.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://sequitur.github.io/raconteur/"
+baseurl: "/raconteur/" # the subpath of your site, e.g. /blog/
+url: "http://sequitur.github.io"
 github_username:  sequitur
 
 # Build settings
