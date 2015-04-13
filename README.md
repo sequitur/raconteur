@@ -34,22 +34,18 @@ Raconteur is still in active development towards its 1.0 release.
   snippets.
 - Based on CommonJS principles (Using undum-commonjs), allowing all game code
   to be bundled using Browserify.
+- An advanced game [template](http://github.com/sequitur/raconteur-scaffold/) that sets up a complete development environment for authors: A build system (gulp), CSS preprocessing (Less), and dependency management (Browserify + npm).
 
-## Planned Features
+## Planned features
 
-- An advanced game template that sets up a complete development environment
-  for authors: A build system (gulp), CSS preprocessing (Less), and dependency
-  management (Browserify + npm).
 - A complete code refactoring of Undum and Raconteur itself with testability
   in mind, allowing the use of testing frameworks with Undum stories.
 
 ## Installation
 
-For now, clone this git repository. Then, from the root:
+Raconteur can be added as a dependency to a package.json file and installed from git. Or, you can use the [scaffold](http://github.com/sequitur/raconteur-scaffold).
 
-    npm install
-
-You will find an useful Gulpfile.js in devel/, among other tools. Eventually, Raconteur will be distributed as a ready-to-use template so that you'll be able to download, install dependencies with `npm install`, and get hacking.
+Raconteur itself doesn't contain any command-line tools or anything that needs to be installed globally. You just need `npm` and `gulp` to be working on your system.
 
 ## Code examples
 
