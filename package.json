@@ -7,7 +7,10 @@
     "name": "Bruno Dias"
   },
   "files": [
-    "lib"
+    "lib/elements.js",
+    "lib/oneOf.js",
+    "lib/qualities.js",
+    "lib/situation.js"
   ],
   "dependencies": {
     "jquery": "~2.1.3",
@@ -32,6 +35,9 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "~1.1.0",
     "watchify": "^3.1.0"
+  },
+  "browserify": {
+    "transform": ["babelify"]
   },
   "private": true
 }
