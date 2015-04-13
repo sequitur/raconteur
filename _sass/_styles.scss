@@ -1,0 +1,58 @@
+
+/* Definitions */
+
+$brand_background: #E24D00;
+
+.site-title {
+
+  text-align: center;
+
+}
+
+.top {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+
+  h5 {
+    text-align: center;
+  }
+}
+
+.bright {
+  padding-top: 2rem;
+  background: $brand_background;
+
+  h1, h2, h3, h4, h5, h6, p {
+    color: white;
+  }
+
+  a {
+    color: white;
+    border-bottom: 1px solid white;
+  }
+
+}
+
+.intro {
+  font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5 {
+  a {
+    text-decoration: none;
+  }
+}
+
+.highlight {
+  margin: none;
+  padding: none;
+}
+
+pre:first-child {
+  margin-top: 0;
+}
+
+.post-meta {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

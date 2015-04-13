@@ -1,125 +1,137 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Raconteur by sequitur</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Raconteur</h1>
-      <h2 class="project-tagline">A friendlier way to write Undum hypertext fiction</h2>
-      <a href="https://github.com/sequitur/raconteur" class="btn">View on GitHub</a>
-      <a href="https://github.com/sequitur/raconteur/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/sequitur/raconteur/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+---
+layout: noheader
+---
 
-    <section class="main-content">
-      <h1>
-<a id="raconteur" class="anchor" href="#raconteur" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raconteur</h1>
+<div class="section top bright">
+<div class="container">
+  <div class="row">
+    <div class="four columns">
+      <h5><a href="news.html">News</a></h5>
+    </div>
+    <div class="four columns">
+      <h5><a href="http://github.com/sequitur/raconteur">View Raconteur on Github</a></h5>
+    </div>
+    <div class="four columns">
+      <h5><a href="http://github.com/sequitur/raconteur-scaffold">Get the scaffold</a></h5>
+    </div>
+  </div>
+</div>
+</div>
 
-<p>Raconteur is a wrapper library for Undum, a system for writing hypertext
-interactive fiction. Raconteur that to provide a more programmer-friendly
-API as well as a bundle of commonly-needed functionality, for novices and
-expert users alike.</p>
+<div class="section">
+<div class="container">
+<div class="row">
+  <div class="six columns intro">
+    <h3>
+      Raconteur dramatically speeds up writing interactive fiction with
+      <a href="http://undum.com">Undum</a>.
+    </h4>
+    <p>
+      Undum is perhaps the most versatile system for writing hypertext
+      interactive fiction. Unfortunately, it's also the hardest to use.
+      Raconteur aims to change that. It's designed so that you only need
+      to care about the complexity that you're going to use, when you're
+      going to use it.
+    </p>
+  </div>
+  <div class="six columns codeexample">
+    {% highlight coffeescript %}
+    situation 'west-of-house',
+      content: """
+        You are standing in an open field west of a white house,
+        with a boarded up front door.
+      """
+    {% endhighlight %}
+  </div>
+</div>
+<div class="row">
+  <div class="six columns intro">
+    <h2>Batteries Included</h2>
+    <p>
+      The Raconteur scaffold comes with everything you need to get started,
+      configured out of the box to use a build system, CSS preprocessor, and
+      bundler. Don't worry too much if you don't know what any of those are:
+      I promise they're helpful.
+    </p>
+  </div>
+  <div class="six columns intro">
+    <h2>Adaptive Text</h2>
+    <p>
+      Raconteur is built with adaptive text generation in mind. Defining
+      snippets of text that vary whenever the player sees them is easy.
+      Raconteur takes inspiration from Inform 7 and other IF development
+      systems.
+      </p>
+      <p>As much as possible, it treats code that produces text and
+      text interchangeably. Raconteur lets you rewrite passages to include
+      dynamic text very easily, so that you can spend more time rewriting
+      your prose and less time refactoring your code.
+    </p>
 
-<p>Raconteur is still in active development towards its 1.0 release.</p>
+    </div>
+</div>
 
-<h2>
-<a id="implemented-features" class="anchor" href="#implemented-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implemented Features</h2>
+<div class="row">
+  <div class="six columns codeexample">
+    {% highlight coffeescript %}
+    situation 'reflecting-pool',
+      content: (character, system) -> """
+        Looking into the pool, you find yourself feeling
+        #{character.sandbox.mood}. It glows with a strange
+        #{this.color} light.
+      """,
+      light: oneOf('blue', 'red', 'green').randomly()
+    {% endhighlight %}
+  </div>
+  <div class="six columns intro">
+    <h2>Modular</h2>
+    <p>
+      Raconteur is made out of modules, each implementing its own set of
+      functionality. You only need to use the ones you want.
+    </p>
+</div>
+</div>
+</div>
+</div>
 
-<ul>
-<li>DSL-like syntax for defining situations.</li>
-<li>A powerful situation prototype that bundles a lot of commonly-used
-functionality.</li>
-<li>Shorthand for defining common hypertext interactions such as text
-replacement or insertion, similar to popular Twine extensions.</li>
-<li>Most properties of situations can be either functions or strings,
-making it easy to turn a simple situation into a complex one.</li>
-<li>An interface that is specifically designed to be used with ECMAScript 6 via
-Babel, or CoffeeScript.</li>
-<li>Markdown, rather than raw HTML, as the format for most text content using
-markdown-it.</li>
-<li>A tool bundle of iterators that makes it easy to define adaptive text
-snippets.</li>
-<li>Based on CommonJS principles (Using undum-commonjs), allowing all game code
-to be bundled using Browserify.</li>
-</ul>
-
-<h2>
-<a id="planned-features" class="anchor" href="#planned-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Planned Features</h2>
-
-<ul>
-<li>An advanced game template that sets up a complete development environment
-for authors: A build system (gulp), CSS preprocessing (Less), and dependency
-management (Browserify + npm).</li>
-<li>A complete code refactoring of Undum and Raconteur itself with testability
-in mind, allowing the use of testing frameworks with Undum stories.</li>
-</ul>
-
-<h2>
-<a id="code-examples" class="anchor" href="#code-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code examples</h2>
-
-<p>Those examples all use CoffeeScript.</p>
-
-<p>Defining a simple situation in Raconteur:</p>
-
-<div class="highlight highlight-coffeescript"><pre>situation <span class="pl-s"><span class="pl-pds">'</span>raconteur_example<span class="pl-pds">'</span></span>,
-  <span class="pl-v"><span class="pl-v">content:</span></span> <span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">  This is an example of a situation using Raconteur's API. It supports</span>
-<span class="pl-s">  Markdown in text, so the content of a simple situation can just be</span>
-<span class="pl-s">  written out without explicit HTML.</span>
-<span class="pl-s">  <span class="pl-pds">"""</span></span></pre></div>
-
-<p>Using text snippets:</p>
-
-<div class="highlight highlight-coffeescript"><pre>
-situation <span class="pl-s"><span class="pl-pds">'</span>variations<span class="pl-pds">'</span></span>,
-  <span class="pl-en">content</span><span class="pl-k">:</span><span class="pl-smi"> <span class="pl-smi">(character, system)</span></span> <span class="pl-k"><span class="pl-k">-&gt;</span></span>
-    <span class="pl-c"># content can be either a function or a simple string, transparently</span>
-    <span class="pl-v"><span class="pl-v">color <span class="pl-k">=</span></span></span> oneOf([<span class="pl-s"><span class="pl-pds">'</span>bright purple<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>sickly green<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>brilliant white<span class="pl-pds">'</span></span>])
-      .randomly(system) <span class="pl-c"># We pass the system object so that random results</span>
-                        <span class="pl-c"># will always be the same across different runs of</span>
-                        <span class="pl-c"># the same saved game.</span>
-
-    <span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">      # Reflecting Pool</span>
-<span class="pl-s"></span>
-<span class="pl-s">      You find yourself in an underground, flooded cave. Light shimmers on</span>
-<span class="pl-s">      the walls, <span class="pl-s1"><span class="pl-pse">#{</span>color<span class="pl-pse">}</span></span>.</span>
-<span class="pl-s">    <span class="pl-pds">"""</span></span></pre></div>
-
-<h2>
-<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
-
-<p>Undum was created by Ian Millington. Raconteur was written by Bruno Dias.</p>
-
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>In short: You can use, modify, or redistribute Raconteur and Undum, for any
-purpose, as long as this license document is kept with copies of it. See
-LICENSE for legalese.</p>
-
-<p>Undum is copyright (c) 2009-2015 I D Millington, and released under the MIT
-license.</p>
-
-<p>Raconteur itself is copyright (c) 2015 Bruno Dias, and released under the
-same MIT license.</p>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/sequitur/raconteur">Raconteur</a> is maintained by <a href="https://github.com/sequitur">sequitur</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
-</html>
-
+<div class="section bright">
+<div class="container">
+<div class="row">
+  <div class="twelve columns">
+    <h2>Programmer-friendly</h2>
+    <p>
+      Raconteur is built using standard web development tools, instead of a
+      specialist toolchain. It's familiar for people who know front-end web
+      development; and those who don't will still benefit from working
+      with a robust, proven toolchain.
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="four columns">
+    <h3>npm</h3>
+    <p>
+      The Node package manager makes it easy to install Raconteur and its
+      dependencies.
+    </p>
+  </div>
+  <div class="four columns">
+    <h3>Gulp</h3>
+    <p>
+      Raconteur is designed to be used with a powerful build system that
+      automates bundling your game and lets you see changes as you make
+      them right on the browser.
+    </p>
+  </div>
+  <div class="four columns">
+    <h3>Browserify</h3>
+    <p>
+      Raconteur is made up of independent modules &ndash; Browserify bundles
+      all of those modules, along with your game, into a single file, while
+      keeping the code separate and modular. You can treat Raconteur as a
+      true library, the guts of which you never have to look into.
+    </p>
+  </div>
+</div>
+</div>
+</div>

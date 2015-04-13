@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+<div class="section posts">
+<div class="container">
+<div class="row">
+
+<div class="twelve columns">
+
+  <h1 class="page-heading">News</h1>
+
+</div>
+</div>
+<div class="row">
+
+
+    {% for post in site.posts %}
+      <div class="two columns">
+        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+      </div>
+      <div class="ten columns">
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+          {{post.excerpt | markdownify}}
+      </div>
+    {% endfor %}
+</div>
+<div class="row">
+<div class="twelve columns">
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+</div>
+</div>
+</div>
+</div>
