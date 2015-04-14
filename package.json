@@ -1,6 +1,6 @@
 {
   "name": "raconteur",
-  "version": "0.1.1-master",
+  "version": "0.1.2-stable",
   "description": "A friendly API framework for building hypertext interactive fiction with Undum",
   "license": "MIT",
   "author": {
