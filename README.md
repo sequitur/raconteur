@@ -45,7 +45,7 @@ Raconteur is still in active development towards its 1.0 release.
 
 Raconteur can be added as a dependency to a package.json file and installed from git. Or, you can use the [scaffold](http://github.com/sequitur/raconteur-scaffold).
 
-Raconteur itself doesn't contain any command-line tools or anything that needs to be installed globally. You just need `npm` and `gulp` to be working on your system.
+Raconteur itself doesn't contain any command-line tools or anything that needs to be installed globally. You just need `npm` to be working on your system. Raconteur is a set of CommonJS modules designed to work with Browserify and a build system like Grunt or Gulp.
 
 ## Code examples
 
