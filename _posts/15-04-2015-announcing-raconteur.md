@@ -85,3 +85,4 @@ Over the next few weeks, I'm going to be posting a series of tutorials on writin
 [Twitter]: https://twitter.com/notbrunoagain
 [Github]: https://github.com/sequitur
 [intfiction.org]: http://www.intfiction.org/forum/
+[own IF blog]: http://segue.pw/
