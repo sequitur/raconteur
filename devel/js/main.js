@@ -1,9 +1,10 @@
 var situation = require('raconteur/situation.js'),
     $ = require('jquery'),
-    undum = require('undum-commonjs'),
     oneOf = require('raconteur/oneOf.js'),
     elements = require('raconteur/elements.js'),
     qualities = require('raconteur/qualities.js');
+
+situation.exportUndum();
 
 var a = elements.a,
     span = elements.span;
