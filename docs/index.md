@@ -8,19 +8,28 @@ Since Raconteur began its life as a library for writing Undum stories using Coff
 
 ## A Note on the Undum API and CommonJS
 
-Raconteur uses a modified version of Undum that complies with CommonJS practices: undum-commonjs. What this means is that, instead of exporting an API directly, Undum now works like a [Node.js] module. In practice, what this means is that instead of the global `undum` object that you had in vanilla undum, you now have to explicitly `require` it. Similarly, we are now using a CommonJS version of JQuery instead of loading JQuery separately in our html file:
+Ideally, Raconteur is supposed to use a commonjs-compliant version of Undum that can be instantiated with `require()´. In actuality, pending a rewrite of Undum's codebase, Raconteur and Undum rely on a single, global Undum object. For this reason, currently the interface to import Undum in your project is:
 
 ```coffeescript
-undum = require('undum-commonjs')
-$ = require('jquery')
+situation = require('raconteur/lib/situation.js')
+situation.exportUndum()
 ```
 
 ```javascript
-var undum = require('undum-commonjs'),
-    $ = require('jquery');
+var situation = require('raconteur/lib/situation.js');
+situation.exportUndum();
 ```
 
-Using `$` as the name of the JQuery object is a convention and not mandatory. Similarly, `undum` can be anything.
+This will ensure that there is a global Undum object and that it is the same as Raconteur's. This is a hack; expect this API to change... eventually.
+
+JQuery is also used as a CommonJS module, so if you intend to call JQuery directly in your story, you'll need to require it:
+
+```coffeescript
+$ = require('jquery');
+```
+```javascript
+var $ = require('jquery');
+```
 
 ## Raconteur Modules
 
