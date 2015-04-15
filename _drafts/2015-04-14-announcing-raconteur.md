@@ -6,25 +6,13 @@ author_id: "@NotBrunoAgain"
 author_url: "http://twitter.com/notbrunoagain"
 ---
 
-Writing interactive fiction is hard. I've shipped two games this year and they were both hard, or at least nontrivial. IF has difficulties that static prose doesn't have to handle, even before you touch the computer systems that actually make IF go.
+Raconteur is "Undum with batteries included." Historically, developing for Undum has meant doing a lot of your own tooling; writing tools to enable you to write your game. Undum's flexibility and power have made it the engine that drove some of the most significant works in IF ([The Play], [Almost Goodbye]). But it has always been relatively inaccessible. Undum is not the system of choice for writing straightforward hypertext games; it's a challenging system to learn and use that demands the author build their own engine on top of it to drive their game logic.
 
-When I finished writing a parser game earlier this year, I pretty much didn't want to look at Inform 7 for at least several months. I wanted to make a hypertext game. So I surveyed the state of hypertext IF systems:
+Raconteur is a descendant of a library I wrote for my own use to write [Mere Anarchy]. I've polished it up (a bit; there is still work to be done) and given it a name, because I want there to be more Undum stories out there.
 
-### ChoiceScript, Inkle Writer
+Raconteur is a library of Undum tools that can get someone writing their story quickly. It tries to push Undum in the direction of Inform 7 and Twine, a system that puts the prose front and center.
 
-Both of those are wonderful options, but they're also based on a very clear idea of what player interaction with your story is going to be. They're based on the idea of clearly demarcated choices at the end of every passage, stitching together a story. I wanted to play around with hypertext more; I wanted to do some of the things Twine authors were doing. Those two systems didn't really support that.
-
-### Twee/Twine
-
-Twine has done amazing work getting people who'd never even thought of making games to write IF. It's also really hard to extend. Most Twine authors rely on macros that were written by others authors. Twine authoring is code bricolage. There's not a lot of documentation on how those macros are written in the first place.
-
-Twee, Twine's underlying technology, also had some other things I didn't care for. TiddlyWiki markup is clumsy. The enforced separation of code and content doesn't seem to benefit either. I missed the directness I had with Inform 7, of being able to just blend code and prose however I wanted to generate content.
-
-### Undum
-
-Undum is at least as powerful as Twee, but has a much cleaner, better documented API that makes writing code to do things with it much more straightforward. Undum is also fairly barebones; batteries are most definitely not included. Starting an Undum project has historically meant writing your own tools before you can get to writing prose. So Undum is in a weird place where there are few Undum pieces, but some of them are of considerable quality. IFDB lists 12 Undum works right now, by 11 authors (I'm one of them). Some of those are really significant works by accomplished authors -- Aaron Reed's Almost Goodbye, Squinky's The Play.
-
-Undum wasn't exactly what I wanted, but it was closest. I set to work building a small library and a toolchain to make it easier to write an Undum story. Raconteur is a version of that library and toolchain written to be used by people who are not me.
+Undum will never be quite as easy to use as Twine -- Raconteur itself introduces some complications for the less technically-minded (It depends on [Node.js], for one thing). But it's an attempt at averaging out the power and flexibility of Undum with the ease of other systems. And for IF authors (or aspiring IF authors) who know a bit of web development, it'll be a very familiar set of tools.
 
 ### What it Does
 
@@ -88,4 +76,12 @@ Raconteur's actual source distribution, on [Github](http://github.com/sequitur/r
 
 Raconteur is still in an experimental state. It's usable, however; you can download the [scaffold](http://github.com/sequitur/raconteur-scaffold/) right now and start playing with it or even building games.
 
-Over the next few weeks, I'm going to be posting a series of tutorials on writing Undum games with Raconteur.
+Over the next few weeks, I'm going to be posting a series of tutorials on writing Undum games with Raconteur, as well as a more navel-gazing explanation of why Raconteur exists, on my [own IF blog]. You can reach me through [Twitter], [Github], or [intfiction.org].
+
+[The Play]: http://ifdb.tads.org/viewgame?id=ytohfp3jetsh1ik4
+[Almost Goodbye]: http://ifdb.tads.org/viewgame?id=myktccphmb29xjne
+[Mere Anarchy]: http://ifdb.tads.org/viewgame?id=txqmifzs44ndjxpw
+[Node.js]: https://nodejs.org
+[Twitter]: https://twitter.com/notbrunoagain
+[Github]: https://github.com/sequitur
+[intfiction.org]: http://www.intfiction.org/forum/

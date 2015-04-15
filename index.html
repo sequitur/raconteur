@@ -5,14 +5,17 @@ layout: noheader
 <div class="section top bright">
 <div class="container">
   <div class="row">
-    <div class="four columns">
+    <div class="three columns">
       <h5><a href="news.html">News</a></h5>
     </div>
-    <div class="four columns">
+    <div class="three columns">
       <h5><a href="http://github.com/sequitur/raconteur">View Raconteur on Github</a></h5>
     </div>
-    <div class="four columns">
+    <div class="three columns">
       <h5><a href="http://github.com/sequitur/raconteur-scaffold">Get the scaffold</a></h5>
+    </div>
+    <div class="three columns">
+      <h5><a href="http://raconteur.readthedocs.org/">Read the documentation</a></h5>
     </div>
   </div>
 </div>
@@ -22,10 +25,10 @@ layout: noheader
 <div class="container">
 <div class="row">
   <div class="six columns intro">
-    <h3>
-      Raconteur dramatically speeds up writing interactive fiction with
-      <a href="http://undum.com">Undum</a>.
-    </h4>
+    <h1>
+      Raconteur is <a href="http://undum.com">Undum</a> with batteries
+      included.
+    </h1>
     <p>
       Undum is perhaps the most versatile system for writing hypertext
       interactive fiction. Unfortunately, it's also the hardest to use.
@@ -34,21 +37,17 @@ layout: noheader
       going to use it.
     </p>
   </div>
-  <div class="six columns codeexample">
-    {% highlight coffeescript %}
-situation 'west-of-house',
-  content: """
-    You are standing in an open field west of a
-    white house, with a boarded up front door.
-  """
-    {% endhighlight %}
+  <div class="six columns">
+  <img alt="a storyteller" src="img/storyteller.jpg">
+
   </div>
 </div>
 <div class="row">
   <div class="six columns intro">
-    <h2>Batteries Included</h2>
+    <h2>Agile</h2>
     <p>
-      The Raconteur scaffold comes with everything you need to get started,
+      The Raconteur <a href="https://github.com/sequitur/raconteur-scaffold">scaffold</a>
+      comes with (most) everything you need to get started,
       configured out of the box to use a build system, CSS preprocessor, and
       bundler. Armed with a text editor (We like
       <a href="http://sublimetext.com">Sublime</a>), you can start writing
@@ -57,17 +56,20 @@ situation 'west-of-house',
     <p>
       The scaffold is set up to automate as much work as possible. You can
       make stylesheet changes and watch them load immediately on a browser.
-      It even automates bundling your game and its assets into a .zip file you
+      You change your game and it bundles it again, refreshing the page.
+      It even automates packaging your game and its assets into a .zip file you
       can upload to <a href="http://itch.io">Itch.io</a>.
       </p>
   </div>
   <div class="six columns intro">
-    <h2>Adaptive Text</h2>
+    <h2>Adaptive</h2>
     <p>
       Raconteur is built with adaptive text generation in mind. Defining
       snippets of text that vary whenever the player sees them is easy.
-      Raconteur takes inspiration from Inform 7 and other IF development
-      systems.
+      Raconteur takes inspiration from Inform 7, commonly used Twine macros,
+      and other popular IF development systems. Text that varies across
+      printings, hypertexts that modify or insert text, and other common
+      functionality is already there to use.
       </p>
       <p>As much as possible, it treats code that produces text and
       text interchangeably. Raconteur lets you rewrite passages to include
@@ -81,7 +83,14 @@ situation 'west-of-house',
 <div class="row">
   <div class="six columns codeexample">
     {% highlight coffeescript %}
-situation 'reflecting-pool',
+situation 'west_of_house',
+  content: """
+    You are standing in an open field west of a
+    white house, with a boarded up front door.
+  """
+  choices: ['forest', 'inside_house']
+
+situation 'reflecting_pool',
   content: (character, system) -> """
     Looking into the pool, you find yourself feeling
     #{character.sandbox.mood}. It glows with a
@@ -95,6 +104,14 @@ situation 'reflecting-pool',
     <p>
       Raconteur is made out of modules, each implementing its own set of
       functionality. You only need to use the ones you want.
+    </p>
+    <h2>Open</h2>
+    <p>
+      Raconteur, Undum, its dependencies (JQuery and markdown-it) are all
+      open source software. Raconteur games are static web pages that can
+      be hosted anywhere or even run locally. You can build your game and
+      share it (or not share it) however you like, wherever you like,
+      rather than being tied to a particular engine, service, or server.
     </p>
 </div>
 </div>
