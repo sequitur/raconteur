@@ -2,7 +2,8 @@ var situation = require('raconteur/situation.js'),
     $ = require('jquery'),
     oneOf = require('raconteur/oneOf.js'),
     elements = require('raconteur/elements.js'),
-    qualities = require('raconteur/qualities.js');
+    qualities = require('raconteur/qualities.js'),
+    racontest = require('raconteur/racontest.js');
 
 situation.exportUndum();
 
@@ -183,6 +184,7 @@ qualities({
 });
 
 undum.game.init = function (character, system) {
+  racontest.init(system);
   character.qualities.intelligence = 10;
   character.qualities.perception = 10;
   character.qualities.size = 1;

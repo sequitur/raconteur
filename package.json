@@ -1,6 +1,6 @@
 {
   "name": "raconteur",
-  "version": "0.1.2-master",
+  "version": "0.2.2-master",
   "description": "A friendly API framework for building hypertext interactive fiction with Undum",
   "license": "MIT",
   "author": {
@@ -22,11 +22,13 @@
     "babelify": "~6.0.2",
     "browser-sync": "~2.5.3",
     "browserify": "~9.0.8",
+    "browserify-shim": "^3.8.5",
     "gulp": "~3.8.11",
     "gulp-less": "~3.0.2",
     "gulp-sourcemaps": "^1.5.1",
     "gulp-util": "^3.0.4",
     "jasmine-core": "^2.2.0",
+    "jasmine-jquery": "^2.0.6",
     "karma": "^0.12.31",
     "karma-babel-preprocessor": "^5.0.1",
     "karma-browserify": "^4.1.2",
@@ -39,8 +41,19 @@
   },
   "browserify": {
     "transform": [
+      "browserify-shim",
       "babelify"
     ]
+  },
+  "browser": {
+    "jasmine-jquery": "./node_modules/jasmine-jquery/lib/jasmine-jquery.js"
+  },
+  "browserify-shim": {
+    "jasmine-jquery": {
+      "depends": [
+        "jquery:jQuery"
+      ]
+    }
   },
   "private": true
 }
