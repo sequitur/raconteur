@@ -1,0 +1,3 @@
+# 0.2.1 (April 18, 2015)
+
+- Add racontest.js, a module for inserting debugging/testing utilities.
