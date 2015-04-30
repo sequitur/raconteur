@@ -15,7 +15,7 @@
   "main": "lib/situation.js",
   "dependencies": {
     "jquery": "~2.1.3",
-    "markdown-it": "~4.1.0",
+    "markdown-it": "~4.1.0"
   },
   "devDependencies": {
     "babelify": "~6.0.2",
