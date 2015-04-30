@@ -3,9 +3,8 @@ var situation = require('raconteur/situation.js'),
     oneOf = require('raconteur/oneOf.js'),
     elements = require('raconteur/elements.js'),
     qualities = require('raconteur/qualities.js'),
-    racontest = require('raconteur/racontest.js');
-
-situation.exportUndum();
+    racontest = require('raconteur/racontest.js'),
+    undum = require('undum-commonjs');
 
 var a = elements.a,
     span = elements.span;
