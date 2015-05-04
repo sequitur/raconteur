@@ -21,13 +21,13 @@ var situation = require('raconteur/situation.js');
 
 `situation()` is the root export of this module, and the only directly exposed method. It takes a name for the situation and an object specification, and then builds a RaconteurSituation object *and adds it to undum.game.situations.* This is not a true constructor, but rather a function that adds a situation to your game according to a given specification.
 
-### name :: String
+### name
 
-The situation's canonical name, equivalent to `undum.Situation#name`. This name is used to refer to the situation in other situations, in their `choices` property, for example, or in direct links.
+The situation's canonical name, equivalent to `undum.Situation#name`. This string identifier is used to refer to the situation in other situations, in their `choices` property, for example, or in direct links.
 
 Name strings should only contain valid URL characters. It's recommended that they contain no spaces or punctuation other than `_`.
 
-### spec :: Object
+### spec
 
 An object describing the situation to be created. Every own property of this object will be added to the situation object created, allowing you to add arbitrary properties for your own purposes.
 
@@ -59,7 +59,7 @@ The return value from those functions is discarded. They're intended to be used 
 
 ### choices :: Array
 
-A list of situation names and/or tags, used by Undum to construct a list of choices for a situation. This list of choices is the last thing outputted when a situation is entered, after `after()` is called.
+A list of situation names and/or tags, used by Undum to construct a list of choices for a situation. Tags should be prefixed with `#`. This list of choices is the last thing outputted when a situation is entered, after `after()` is called.
 
 ### content :: String or Function
 
@@ -127,7 +127,7 @@ This is a fenced code block.
 
 ### tags :: Array (from undum.Situation)
 
-A list of tags. See Undum documentation.
+A list of tags, without a leading `#`. In a situation's `choices` list, other situations can be referred specifically by name, or in groups by tag.
 
 ### optionText :: String (from undum.Situation)
 

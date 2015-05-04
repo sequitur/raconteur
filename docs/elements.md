@@ -77,23 +77,23 @@ Every ElementHelper object supplies the following methods. All of them return a 
 
 Returns a new ElementHelper with the given string as its `_alt` property. This property is used as the element's `alt` attribute.
 
-## class :: String -> ElementHelper
+## class(className) -> ElementHelper
 
 Returns a new ElementHelper with the given String as an additional class. This method is *additive,* so it adds new classes to the element. To completely change the element's classes, use ElementHelper#Classes
 
-## classes :: Array -> ElementHelper
+## classes(classes) -> ElementHelper
 
 Returns a new ElementHelper with the given Array as a list of classes. This shadows any previously defined classes. If you wanted to erase all of an element's classes, you could use `element.classes([])`.
 
-## content :: String -> ElementHelper
+## content(content) -> ElementHelper
 
 Returns a new ElementHelper with the given content. "Content" here means the element's inner html, which will be parsed as inline markdown.
 
-## id :: String -> ElementHelper
+## id(idName) -> ElementHelper
 
 Returns a new ElementHelper with the given id. This string is then used as the value of the element's `id` attribute.
 
-## ref :: String -> ElementHelper
+## ref(url) -> ElementHelper
 
 Returns a new ElementHelper with the given string as its `_ref` property. This property is used as the value of the element's `href` attribute.
 
@@ -101,15 +101,15 @@ Returns a new ElementHelper with the given string as its `_ref` property. This p
 
 Returns a new ElementHelper with the given string as its `_src` property. This property is used as the value of the element's `src` attribute.
 
-## url :: String -> ElementHelper, situation :: String -> ElementHelper
+## url(url) -> ElementHelper, situation(url) -> ElementHelper
 
-Aliases for `ElementHelper#ref`, for code legibility.
+Aliases for `ElementHelper#ref`, for legibility.
 
-## once
+## once() -> ElementHelper
 
 Returns a new ElementHelper with the `once` class added to it. This class has special meaning to Undum (once links stop being hyperlinks once clicked on). This method is shorthand for `class('once')`.
 
-## type :: String -> ElementHelper
+## type(linkType) -> ElementHelper
 
 Returns a new ElementHelper with its `_linkType` property set to the given string. This property is used to integrate with Raconteur's special link types. When the ElementHelper is stringified, the `_linkType` property is added as a class to the link, and as a prefix to its href. So a link with a type of "writer" and a ref of "foo" will be written out with `href="./_writer_foo"`; when clicked, Raconteur will look for the current situation's `writers.foo` property.
 
@@ -117,7 +117,7 @@ If an ElementHelper's type is `action`, it will prefix the link's ref with `./` 
 
 It's possible to clear an element's `_linkType_` property by setting it to `null` or an empty string: `element.type(null)`.
 
-## writer, replacer, inserter, action
+## writer(), replacer(), inserter(), action() -> ElementHelper
 
 All of those methods are shorthand for defining an ElementHelper for an action link.
 
@@ -147,6 +147,12 @@ Returns a new `<img>` elementHelper object, with its alt text set to the argumen
 ## element(tag) -> elementHelper
 
 Returns a new elementHelper object for the given tag. Usually, this can be called once to define your own custom element helpers:
+
+```coffeescript
+elements = require('raconteur/elements.js')
+em = elements.element('em')
+glow = (content) -> em.class('glow').content(content)
+```
 
 ```javascript
 var elements = require('raconteur/elements.js');

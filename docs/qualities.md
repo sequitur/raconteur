@@ -41,6 +41,32 @@ You can create your own factories by passing the constructor of a `QualityDefini
 
 ## Extended Example
 
+```coffeescript
+# A QualityDefinition implementation constructor.
+DifficultyQuality = (title, threshold) ->
+  undum.QualityDefinition.call(this, title)
+  this.threshold = threshold
+
+DifficultyQuality.prototype.format = (character, value) ->
+  if value > this.threshold then "hard" else "easy"
+
+# Create a factory to use in our definition spec.
+difficulty = qualities.create DifficultyQuality
+
+# Give a specification of our quality definitions to the qualities()
+# function.
+qualities
+  stats:
+    name: 'Statistics'
+    perception: qualities.integer("Perception")
+    intelligence: qualities.integer("Intelligence")
+    size: qualities.fudgeAdjectives("Size")
+  settings:
+    name: 'Settings'
+    combatDifficulty: difficulty("Combat", 5) # Is equivalent to...
+    puzzleDifficulty: qualities.use(DifficultyQuality, "Puzzles", 3)
+```
+
 ```javascript
 /* A QualityDefinition implementation constructor. */
 var DifficultyQuality = function (title, threshold) {
@@ -74,29 +100,4 @@ qualities({
 
 /* Remember that qualities have to have their initial value set in
 undum.game.init()*/
-```
-```coffeescript
-# A QualityDefinition implementation constructor.
-DifficultyQuality = (title, threshold) ->
-  undum.QualityDefinition.call(this, title)
-  this.threshold = threshold
-
-DifficultyQuality.prototype.format = (character, value) ->
-  if value > this.threshold then "hard" else "easy"
-
-# Create a factory to use in our definition spec.
-difficulty = qualities.create DifficultyQuality
-
-# Give a specification of our quality definitions to the qualities()
-# function.
-qualities
-  stats:
-    name: 'Statistics'
-    perception: qualities.integer("Perception")
-    intelligence: qualities.integer("Intelligence")
-    size: qualities.fudgeAdjectives("Size")
-  settings:
-    name: 'Settings'
-    combatDifficulty: difficulty("Combat", 5) # Is equivalent to...
-    puzzleDifficulty: qualities.use(DifficultyQuality, "Puzzles", 3)
 ```
