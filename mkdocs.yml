@@ -6,3 +6,4 @@ pages:
   - ['situation.md', 'API Documentation', 'situation.js']
   - ['elements.md', 'API Documentation', 'elements.js']
   - ['oneOf.md', 'API Documentation', 'oneOf.js']
+  - ['qualities.md', 'API Documentation', 'qualities.js']

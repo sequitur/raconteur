@@ -179,12 +179,13 @@ situation('progress-bar', {
   qualities.create() to get a factory.
 */
 
-var DifficultyQuality = function (title, spec) {
-  undum.QualityDefinition.call(this, title, spec);
+var DifficultyQuality = function (title, threshold) {
+  undum.QualityDefinition.call(this, title);
+  this.threshold = threshold;
 };
 
 DifficultyQuality.prototype.format = function (character, value) {
-  if (value > 5) return "hard";
+  if (value > this.threshold) return "hard";
   return "easy";
 };
 
@@ -199,8 +200,8 @@ qualities({
   },
   settings: {
     name: 'Settings',
-    combatDifficulty: difficulty("Combat"),
-    puzzleDifficulty: qualities.use(DifficultyQuality, "Puzzles")
+    combatDifficulty: difficulty("Combat", 5),
+    puzzleDifficulty: qualities.use(DifficultyQuality, "Puzzles", 3)
   }
 });
 
