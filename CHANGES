@@ -1,13 +1,13 @@
-# 0.4.0
+# 0.4.0 (May 4th, 2015)
 
 - qualities.js now exports `create()` and `use()`, two functions used to
   incorporate your own quality constructors into the API.
 
-# 0.3.0 (April 30, 2015)
+# 0.3.0 (April 30th, 2015)
 
 - Did away with exportUndum(), since the problem it solves doesn't really exist.
 - Moved undum to a devdependency.
 
-# 0.2.1 (April 18, 2015)
+# 0.2.1 (April 18th, 2015)
 
 - Add racontest.js, a module for inserting debugging/testing utilities.
