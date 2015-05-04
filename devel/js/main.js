@@ -173,12 +173,34 @@ situation('progress-bar', {
   choices: ['return']
 });
 
+/*
+  Custom quality definition. We make a constructor for an object that supplies
+  the QualityDefinition interface Undum expects, and then pass that to
+  qualities.create() to get a factory.
+*/
+
+var DifficultyQuality = function (title, spec) {
+  undum.QualityDefinition.call(this, title, spec);
+};
+
+DifficultyQuality.prototype.format = function (character, value) {
+  if (value > 5) return "hard";
+  return "easy";
+};
+
+var difficulty = qualities.create(DifficultyQuality);
+
 qualities({
   stats: {
     name: 'Statistics',
     perception: qualities.integer("Perception"),
     intelligence: qualities.integer("Intelligence"),
     size: qualities.fudgeAdjectives("Size")
+  },
+  settings: {
+    name: 'Settings',
+    combatDifficulty: difficulty("Combat"),
+    puzzleDifficulty: qualities.use(DifficultyQuality, "Puzzles")
   }
 });
 
@@ -187,6 +209,8 @@ undum.game.init = function (character, system) {
   character.qualities.intelligence = 10;
   character.qualities.perception = 10;
   character.qualities.size = 1;
+  character.qualities.combatDifficulty = 6;
+  character.qualities.puzzleDifficulty = 2;
   myIterators.consistentIterator =
     oneOf('Blue', 'Black', 'Green', 'Red', 'White')
     .inRandomOrder(system);
