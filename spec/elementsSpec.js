@@ -1,3 +1,5 @@
+'use strict'
+
 var elements = require('raconteur/elements.js');
 
 var a = elements.a, span = elements.span;

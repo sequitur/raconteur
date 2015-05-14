@@ -173,6 +173,28 @@ situation('progress-bar', {
   choices: ['return']
 });
 
+situation('continuation', {
+  content: `
+    # Continuation and Sections
+
+    Each situation is output to the screen as its own section. You can
+    go to [the next situation](continuation-continue) to see a situation
+    that adds to the existing section, instead of writing a new one.
+    `,
+  optionText: 'Continuations and Sections',
+  tags: ['testing-option']
+});
+
+situation ('continuation-continue', {
+  content: `
+    This feature allows situations to be individually styled. The \`classes\`
+    attribute of a situation controls additional classes to be added to the
+    section.
+    `,
+  continueSection: true,
+  choices: ['return']
+});
+
 /*
   Custom quality definition. We make a constructor for an object that supplies
   the QualityDefinition interface Undum expects, and then pass that to
