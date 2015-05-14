@@ -8,6 +8,12 @@ RaconteurSituation's core features:
 - Built-in support for the most common types of hypertext interactions: Inserting text, replacing text, adding text, and binding custom actions to hyperlinks.
 - `content` among other properties can be defined as either a string, or a function that returns a string. This makes it very easy to refactor simple situations with static text into complex situations with dynamic text.
 
+## current-situation and sections
+
+Raconteur creates the `content` from each new situation as a new `<section>` element on the page. This enables situations to be styled, but it's important to note that Raconteur also relies on tracking which of those sections has the `#current-situation` id; whenever a new situation with content is entered, that id is applied to that situation's section and stripped from all others.
+
+Writing into this element is useful for adding content just before the options list, and it's also the default behaviour of Raconteur writers. This does mean that if you are using Undum's low-level API to write to the end of the content spool, you probably want to use `system.writeInto()` to write inside the current situation.
+
 # Exports
 
 ## situation(name, spec)
@@ -60,6 +66,16 @@ The return value from those functions is discarded. They're intended to be used 
 ### choices :: Array
 
 A list of situation names and/or tags, used by Undum to construct a list of choices for a situation. Tags should be prefixed with `#`. This list of choices is the last thing outputted when a situation is entered, after `after()` is called.
+
+### classes :: Array
+
+A list of classes that will be added to the `class` attribute of the `<section>` element wrapping the situation's content. If the situation has no content or if its `continueSection` property is truthy, this is disregarded.
+
+The classes given are in addition to the `[situation name]-situation` class that is added to the section by default.
+
+### continueSection :: Boolean
+
+If this is a truthy value, instead of creating a new section, the `content` of this situation is appended to the end of the `#current-situation` section -- Normally, the section created by the previous situation. This can be useful if you want to use a section as a styled element and you want to expand it, for instance if you want to group some sections visually inside a box.
 
 ### content :: String or Function
 

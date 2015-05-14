@@ -182,7 +182,8 @@ situation('continuation', {
     that adds to the existing section, instead of writing a new one.
     `,
   optionText: 'Continuations and Sections',
-  tags: ['testing-option']
+  tags: ['testing-option'],
+  classes: ['styled-situation']
 });
 
 situation ('continuation-continue', {
