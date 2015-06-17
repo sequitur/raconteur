@@ -73,7 +73,7 @@ A list of classes that will be added to the `class` attribute of the `<section>`
 
 The classes given are in addition to the `[situation name]-situation` class that is added to the section by default.
 
-### continueSection :: Boolean
+### extendSection :: Boolean
 
 If this is a truthy value, instead of creating a new section, the `content` of this situation is appended to the end of the `#current-situation` section -- Normally, the section created by the previous situation. This can be useful if you want to use a section as a styled element and you want to expand it, for instance if you want to group some sections visually inside a box.
 
