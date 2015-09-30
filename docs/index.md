@@ -2,25 +2,23 @@
 
 Raconteur makes writing interactive hypertext fiction with Undum straightforward and perphaps even fun. Raconteur however is only a wrapper layer on top of the Undum hypertext fiction engine; for this reason, this documentation will include references to Undum API features as well. Feel free to consult the [Undum documentation](http://undum.com/doc/index.html) itself.
 
+**This is version 1 of this documentation, updated on September 30th, 2015.**
+
 ## A Note about code examples
 
 Since Raconteur began its life as a library for writing Undum stories using CoffeeScript, code examples in this document will be doubled: A CoffeeScript example, and then a JavaScript example, always in that order. Both will always be equivalent.
 
 ## A Note on the Undum API and CommonJS
 
-Ideally, Raconteur is supposed to use a commonjs-compliant version of Undum that can be instantiated with `require()´. In actuality, pending a rewrite of Undum's codebase, Raconteur and Undum rely on a single, global Undum object. For this reason, currently the interface to import Undum in your project is:
+Raconteur is supposed to use a commonjs-compliant version of Undum that can be instantiated with `require()´. Undum-commonjs is currently maintained in a separate [github repository](https://github.com/sequitur/undum)
 
 ```coffeescript
 situation = require('raconteur/lib/situation.js')
-situation.exportUndum()
 ```
 
 ```javascript
 var situation = require('raconteur/lib/situation.js');
-situation.exportUndum();
 ```
-
-This will ensure that there is a global Undum object and that it is the same as Raconteur's. This is a hack; expect this API to change... eventually.
 
 JQuery is also used as a CommonJS module, so if you intend to call JQuery directly in your story, you'll need to require it:
 
@@ -30,6 +28,10 @@ $ = require('jquery');
 ```javascript
 var $ = require('jquery');
 ```
+
+## A Note about the scaffold
+
+Raconteur is an independent comonjs module, currently installed directly from a github repository due to its experimental status. However, to make it easier and simpler to set up a new project, a [scaffold] is supplied which has all the files to use Raconteur with Coffeescript, Less, and a build system.
 
 ## Raconteur Modules
 
@@ -61,3 +63,4 @@ Raconteur is designed to be bundled with [Browserify]. Browserify will walk the 
 [Browserify]: http://browserify.org/
 [markdown-it]: https://markdown-it.github.io/
 [JQuery]: http://jquery.com/
+[scaffold]: https://github.com/sequitur/raconteur-scaffold
