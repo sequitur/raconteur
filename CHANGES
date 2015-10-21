@@ -1,3 +1,7 @@
+# 0.5.0 (October 21st, 2015)
+
+The `markdown` object from markdown-it is now exposed as situation.markdown, so that it can be configured.
+
 # 0.4.1 (May 13th, 2015)
 
 Each situation with content is now output as its own `<section>` element. Each situation with content clears the `#current-situation` id from previous situations and gives its content section that id.
