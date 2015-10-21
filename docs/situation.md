@@ -172,3 +172,36 @@ What is done with this string depends on the type of link.
 - *Writer*: The string is parsed as Markdown and passed to `System#write`, so its content is written at the end of the story roll.
 - *Replacer*: The string is parsed as inline markdown, and wrapped in `<span>` tags if necessary. The resulting html is then used to replace each DOM element with an id property equal to the action reference, if one exists.
 - *Inserter*: The string is parsed as inline markdown, and wrapped in `<span>` tags if necessary. The resulting html is then inserted as the last child of each DOM element with an id property equal to the action reference, if one exists.
+
+
+## situation.markdown
+
+Raconteur uses the [`markdown-it`][markdown-it] project for parsing Markdown
+into HTML. `markdown-it` is quite configurable, and has strong support for
+[plugins][plugins].
+
+To use a plugin (e.g. [`markdown-it-attrs`][attrs]), install it into your scaffold project:
+
+```bash
+$ npm install --save markdown-it-attrs
+```
+
+Then, in your `game/main.coffee` file:
+
+```coffeescript
+situation = require('raconteur')
+
+situation.markdown.use(require('markdown-it-attrs'))
+```
+
+Then, use your new plugin syntax throughout your game!
+
+```markdown
+# A Dark and Stormy Night {#cliche}
+
+Suddenly, wild HTML attributes appeared! {.surprise}
+```
+
+[markdown-it]: https://www.npmjs.com/package/markdown-it
+[plugins]: https://www.npmjs.com/browse/keyword/markdown-it-plugin
+[attrs]: https://www.npmjs.com/package/markdown-it-attrs
