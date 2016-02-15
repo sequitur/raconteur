@@ -1,10 +1,10 @@
-var situation = require('raconteur/situation.js'),
+var situation = require('../../lib/situation.js'),
     $ = require('jquery'),
-    oneOf = require('raconteur/oneOf.js'),
-    elements = require('raconteur/elements.js'),
-    qualities = require('raconteur/qualities.js'),
-    racontest = require('raconteur/racontest.js'),
-    undum = require('undum-commonjs');
+    oneOf = require('../../lib/oneOf.js'),
+    elements = require('../../lib/elements.js'),
+    qualities = require('../../lib/qualities.js'),
+    racontest = require('../../lib/racontest.js'),
+    undum = require('../../lib/undum.js');
 
 var a = elements.a,
     span = elements.span;
@@ -55,7 +55,7 @@ situation('markdown-features', {
       situation('start', {
         content: "This is an example."
       });
-  
+
   Additionally, we also support "smart quotes" and -- dashes.`,
   tags: ['testing-option'],
   optionText: 'Markdown support',
