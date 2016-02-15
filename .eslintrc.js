@@ -11,7 +11,7 @@ module.exports = {
   rules: {
     'dot-notation': 2,
     'eqeqeq': [2, 'smart'],
-    'curly': [2, 'multi', 'consistent'],
+    'curly': [2, 'multi-or-nest', 'consistent'],
     'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
     'eol-last': 2,
     'consistent-this': [2, 'self'],
