@@ -7,6 +7,12 @@ describe('element', function () {
       element('p').toString()
     ).to.equal('<p></p>');
   });
+
+  it('appends the once class', function () {
+    expect(
+      element('p').once().toString()
+    ).to.equal('<p class="once"></p>');
+  });
 });
 
 describe('a', function () {

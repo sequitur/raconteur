@@ -1,4 +1,4 @@
 .eslintrc.js
 dist/**
-spec/**
+test/**
 karma.conf.js
