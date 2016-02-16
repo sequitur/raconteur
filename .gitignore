@@ -2,3 +2,4 @@ node_modules/*
 devel/build/**
 game/**
 *.sublime-workspace
+coverage
