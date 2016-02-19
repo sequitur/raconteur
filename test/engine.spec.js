@@ -1,3 +1,7 @@
+/*eslint-env mocha */
+/*eslint-disable prefer-arrow-callback */
+
+
 const jsdom = require('mocha-jsdom');
 const expect = require('chai').expect;
 
@@ -38,7 +42,7 @@ describe('engine', function () {
     );
 
     engine.game.situations.complex = new engine.Situation({
-      enter (character, system, from) {
+      enter (character, system) {
         system.write(`
             <p>This is a complex situation with a custom spec.</p>
             <p><a href="./action" id="action">Action</a></p>

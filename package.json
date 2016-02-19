@@ -7,7 +7,7 @@
     "name": "Bruno Dias"
   },
   "scripts": {
-    "test": "gulp",
+    "test": "gulp"
   },
   "files": [
     "lib/elements.js",
