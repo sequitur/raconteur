@@ -1,6 +1,6 @@
 {
   "name": "raconteur",
-  "version": "1.0-alpha",
+  "version": "1.0.0-alpha",
   "description": "A framework for building hypertext fiction in JavaScript.",
   "license": "MIT",
   "homepage": "https://github.com/sequitur/raconteur",
