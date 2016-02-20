@@ -73,7 +73,7 @@ describe('situation', function () {
       choices: ['#testing-option']
     });
 
-    situation ('special-links', {
+    situation('special-links', {
       content: `
           # Special Links
 
@@ -102,13 +102,28 @@ describe('situation', function () {
       choices: ['#testing-option']
     });
 
-    situation ('reentry', {
+    situation('reentry', {
       before () {
         mock.call('times');
       },
       tags: ['testing-option'],
       choices: ['#testing-option']
     });
+
+    situation('section-class', {
+      content: 'this section has a class',
+      classes: ['test-class'],
+      tags: ['testing-option'],
+      choices: ['#testing-option']
+    });
+
+    situation('section-continue', {
+      continue: true,
+      content: 'continue the previous section',
+      classes: ['test-class'],
+      tags: ['testing-option'],
+      choices: ['#testing-option']
+    })
 
     engine.game.init = function () {}; // noop for now
 
@@ -216,12 +231,12 @@ describe('situation', function () {
 
   it('supports custom actions', function () {
     expect(mock.calledWith('custom_action'))
-      .to.be.equal(false);
+      .to.be.false;
 
     clickOn('./customaction');
 
     expect(mock.calledWith('custom_action'))
-      .to.be.equal(true);
+      .to.be.true;
   });
 
   it('supports once links', function () {
@@ -254,5 +269,21 @@ describe('situation', function () {
     clickOn('reentry');
 
     expect(mock.timesCalled).to.equal(calls);
+  });
+
+  // Section tests
+
+  it('inserts content in a section with classes', function () {
+    clickOn('section-class');
+
+    expect($('section.test-class').text())
+      .to.match(/this section has a class/);
+  });
+
+  it('continues a preexisting section', function () {
+    clickOn('section-continue');
+
+    expect($('section.test-class').text())
+      .to.match(/continue the previous section/);
   });
 });
