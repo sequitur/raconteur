@@ -3,3 +3,4 @@ devel/build/**
 game/**
 *.sublime-workspace
 coverage
+dist

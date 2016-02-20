@@ -1,21 +1,31 @@
 {
   "name": "raconteur",
-  "version": "0.5.0-master",
-  "description": "A friendly API framework for building hypertext interactive fiction with Undum",
+  "version": "1.0-alpha",
+  "description": "A framework for building hypertext fiction in JavaScript.",
   "license": "MIT",
+  "homepage": "https://github.com/sequitur/raconteur",
   "author": {
     "name": "Bruno Dias"
   },
+  "contributors": [
+    { "name": "Alexander Yakovlev" },
+    { "name": "Andrew Plotkin" },
+    { "name": "David Eyk" },
+    { "name": "Dmitry Eliseev" },
+    { "name": "Ian Millington" },
+    { "name": "Ivan Narozhny" },
+    { "name": "Juhana Leinonen" },
+    { "name": "Michael Neal Tenuis" },
+    { "name": "Selene" }
+  ],
   "scripts": {
-    "test": "gulp"
+    "test": "gulp",
+    "prepublish": "gulp prepublish"
   },
   "files": [
-    "lib/elements.js",
-    "lib/oneOf.js",
-    "lib/qualities.js",
-    "lib/situation.js"
+    "dist"
   ],
-  "main": "lib/situation.js",
+  "main": "dist/index.js",
   "dependencies": {
     "jquery": "~2.1.3",
     "markdown-it": "~6.0.0"
@@ -26,26 +36,11 @@
     "chai": "^3.5.0",
     "eslint": "^2.0.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-mocha": "^2.2.0",
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
     "mocha-jsdom": "^1.0.0"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim",
-      "babelify"
-    ]
-  },
-  "browser": {
-    "jasmine-jquery": "./node_modules/jasmine-jquery/lib/jasmine-jquery.js"
-  },
-  "browserify-shim": {
-    "jasmine-jquery": {
-      "depends": [
-        "jquery:jQuery"
-      ]
-    }
-  },
-  "private": true
+  "repository": "sequitur/raconteur"
 }
