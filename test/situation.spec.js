@@ -32,6 +32,7 @@ describe('situation', function () {
 
   before(function () {
 
+    window.matchMedia = require('./helpers/matchMedia.js');
     document.body.innerHTML = DOCUMENT_BODY;
 
     engine = require('../lib/engine.js');

@@ -18,6 +18,8 @@ describe('engine', function () {
 
   before(function () {
     // Set up a document body DOM
+    window.matchMedia = require('./helpers/matchMedia.js');
+    
     document.body.innerHTML = DOCUMENT_BODY;
 
     // Actually require the libraries we're testing; we do this because bad
