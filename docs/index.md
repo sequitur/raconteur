@@ -1,6 +1,6 @@
 # Raconteur
 
-Raconteur makes writing interactive hypertext fiction with Undum straightforward and perphaps even fun. Raconteur however is only a wrapper layer on top of the Undum hypertext fiction engine; for this reason, this documentation will include references to Undum API features as well. Feel free to consult the [Undum documentation](http://undum.com/doc/index.html) itself.
+Raconteur makes writing interactive hypertext fiction with Undum straightforward and perphaps even fun. Raconteur however is only a wrapper layer on top of the Undum hypertext fiction engine; for this reason, this documentation will include references to Undum API features as well. Feel free to consult the [Undum documentation](https://idmillington.github.io/undum/doc/index.html) itself.
 
 **This is version 1 of this documentation, updated on September 30th, 2015.**
 
