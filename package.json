@@ -33,7 +33,7 @@
     "karma-browserify": "^4.1.2",
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.1.4",
-    "lodash": "^3.6.0",
+    "lodash": "^4.17.20",
     "undum": "git://github.com/sequitur/undum.git#commonjs",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "~1.1.0",
